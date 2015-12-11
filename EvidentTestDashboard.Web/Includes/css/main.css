@@ -86,15 +86,15 @@
             }
 
             .block .block-subinfo .status.status-succes {
-                background-color: #90F59A;
+                background-color: /*#90F59A;*/ #63985C;
             }
 
             .block .block-subinfo .status.status-failed {
-                background-color: #ff8282;
+                background-color: /*#ff8282;*/ #FF4B4B;
             }
 
             .block .block-subinfo .status.status-cancelled {
-                background-color: /*#CCC8BC;*/ #FFE883;
+                background-color: /*#CCC8BC;*/ #949494;
             }
 
     .block .block-inner {
@@ -116,26 +116,26 @@
             .block .block-inner .parts .part {
                 width: 5%;
                 height: 16px;
-                background-color: #90F59A;
+                background-color: /*#90F59A;*/ #63985C;
                 float: left;
                 margin-bottom: 1px;
                 border: 2px solid #383737;
             }
 
                 .block .block-inner .parts .part.failed {
-                    background-color: #ff8282;
+                    background-color: /*#ff8282;*/ #FF4B4B;
                     cursor: pointer;
                 }
 
                     .block .block-inner .parts .part.failed:hover {
-                        background-color: #FF9B9B;
+                        background-color: #FF7070;
                     }
 
                 .block .block-inner .parts .part.cancelled {
-                    background-color: /*#CCC8BC;*/ #FFE883;
+                    background-color: /*#CCC8BC;*/ #949494;
                     cursor: pointer;
                 }
 
                     .block .block-inner .parts .part.cancelled:hover {
-                        background-color: #FFEFA9;
+                        background-color: #ABABAB;
                     }
