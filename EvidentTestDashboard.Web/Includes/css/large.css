@@ -1,0 +1,27 @@
+﻿@media screen and (min-width: 992px) {
+    .block .block-inner {
+        min-height: 600px;
+    }
+
+        .block .block-inner .info {
+            position: absolute;
+            left: -80px;
+            width: 80px;
+            text-align: right;
+            padding-top: 11px;
+            color: #9E9E9E;
+        }
+
+        .block .block-inner .parts {
+            margin-top: 14px;
+        }
+
+            .block .block-inner .parts .part {
+                width: 10%;
+                height: 20px;
+            }
+
+        .block .block-inner:not(.main-block) .info {
+            display: none;
+        }
+}

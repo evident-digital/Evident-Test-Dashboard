@@ -13,6 +13,7 @@
 .logo {
     float: left;
     margin-top: 14px;
+    padding-left: 15px;
 }
 
 .navbar-inverse {
@@ -27,7 +28,7 @@
     float: left;
     font-size: 14px;
     color: #9E9E9E;
-    padding-left: 50px;
+    padding-left: 15px;
 }
 
 /************ MAIN CONTENT ************/
@@ -37,53 +38,104 @@
 }
 
 .side-information {
-    margin-top: 66px;
+    margin-top: 125px;
     text-align: right;
     color: #9E9E9E;
 }
+
+    .side-information span:nth-child(2) {
+        display: block;
+        margin-top: 62px;
+    }
 
 .block {
     padding-right: 10px;
     padding-left: 10px;
 }
 
-.block .block-title {
-    text-align: center;
-    width: 100%;
-    font-size: 18px;
-    padding-bottom: 8px;
-}
+    .block .block-title {
+        text-align: center;
+        width: 100%;
+        font-size: 18px;
+        padding-bottom: 8px;
+    }
 
-.block .block-subinfo {
-    border-top: 1px solid #585858;
-    padding: 6px 0;
-}
+    .block .block-subinfo {
+        border-top: 1px solid #585858;
+        border-bottom: 1px solid #585858;
+        padding: 8px 0 10px 0;
+    }
 
-.block .block-subinfo .status-total {
-    margin-top: 6px;
-}
+        .block .block-subinfo .status-total {
+            margin-top: 6px;
+        }
 
-.block .block-subinfo .status {
-    color: #292929;
-    text-align: center;
-    padding: 6px;
-}
+        .block .block-subinfo .status {
+            color: #292929;
+            text-align: center;
+            padding: 6px;
+            font-size: 12px;
+        }
 
-.block .block-subinfo .status.status-succes {
-    background-color: #75E07F;
-}
+            .block .block-subinfo .status:first-child {
+                border-right: 4px solid #292929;
+            }
 
-.block .block-subinfo .status.status-failed {
-    background-color: #ff8282;
-}
+            .block .block-subinfo .status:last-child {
+                border-left: 4px solid #292929;
+            }
 
-.block .block-subinfo .status.status-cancelled {
-    background-color: #CCC8BC;
-}
+            .block .block-subinfo .status.status-succes {
+                background-color: #90F59A;
+            }
+
+            .block .block-subinfo .status.status-failed {
+                background-color: #ff8282;
+            }
+
+            .block .block-subinfo .status.status-cancelled {
+                background-color: /*#CCC8BC;*/ #FFE883;
+            }
 
     .block .block-inner {
-        min-height: 600px;
-        padding: 14px;
+        padding: 8px;
         background-color: #383737;
-        border-top: 1px solid #585858;
+        margin-top: 10px;
+        margin-bottom: 30px;
     }
+
+        .block .block-inner .parts {
+            display: inline-block;
+            width: 100%;
+        }
+
+            .block .block-inner .parts:first-child {
+                margin-top: 0;
+            }
+
+            .block .block-inner .parts .part {
+                width: 5%;
+                height: 16px;
+                background-color: #90F59A;
+                float: left;
+                margin-bottom: 1px;
+                border: 2px solid #383737;
+            }
+
+                .block .block-inner .parts .part.failed {
+                    background-color: #ff8282;
+                    cursor: pointer;
+                }
+
+                    .block .block-inner .parts .part.failed:hover {
+                        background-color: #FF9B9B;
+                    }
+
+                .block .block-inner .parts .part.cancelled {
+                    background-color: /*#CCC8BC;*/ #FFE883;
+                    cursor: pointer;
+                }
+
+                    .block .block-inner .parts .part.cancelled:hover {
+                        background-color: #FFEFA9;
+                    }
