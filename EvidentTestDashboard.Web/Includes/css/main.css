@@ -1,0 +1,89 @@
+﻿body, html {
+    font-family: Arial;
+    background-color: #292929;
+    color: white;
+}
+
+.container {
+    max-width: 1920px;
+}
+
+/*************** HEADER ***************/
+
+.logo {
+    float: left;
+    margin-top: 14px;
+}
+
+.navbar-inverse {
+    background-color: #000;
+    background: -webkit-linear-gradient(#2e2e2e, #212121);
+    background: -o-linear-gradient(#2e2e2e, #212121);
+    background: -moz-linear-gradient(#2e2e2e, #212121);
+    background: linear-gradient(#2e2e2e, #212121);
+}
+
+.navbar .navbar-header a.navbar-brand {
+    float: left;
+    font-size: 14px;
+    color: #9E9E9E;
+    padding-left: 50px;
+}
+
+/************ MAIN CONTENT ************/
+
+.body-content {
+    padding: 15px 20px 20px 20px;
+}
+
+.side-information {
+    margin-top: 66px;
+    text-align: right;
+    color: #9E9E9E;
+}
+
+.block {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.block .block-title {
+    text-align: center;
+    width: 100%;
+    font-size: 18px;
+    padding-bottom: 8px;
+}
+
+.block .block-subinfo {
+    border-top: 1px solid #585858;
+    padding: 6px 0;
+}
+
+.block .block-subinfo .status-total {
+    margin-top: 6px;
+}
+
+.block .block-subinfo .status {
+    color: #292929;
+    text-align: center;
+    padding: 6px;
+}
+
+.block .block-subinfo .status.status-succes {
+    background-color: #75E07F;
+}
+
+.block .block-subinfo .status.status-failed {
+    background-color: #ff8282;
+}
+
+.block .block-subinfo .status.status-cancelled {
+    background-color: #CCC8BC;
+}
+
+    .block .block-inner {
+        min-height: 600px;
+        padding: 14px;
+        background-color: #383737;
+        border-top: 1px solid #585858;
+    }
