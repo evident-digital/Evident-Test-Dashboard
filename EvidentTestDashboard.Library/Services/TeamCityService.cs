@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
+using EvidentTestDashboard.Library.Contracts;
 using EvidentTestDashboard.Library.DTO;
+using EvidentTestDashboard.Library.Entities;
+using Newtonsoft.Json.Linq;
 using static System.Configuration.ConfigurationManager;
 
 namespace EvidentTestDashboard.Library.Services
@@ -13,10 +17,12 @@ namespace EvidentTestDashboard.Library.Services
     public class TeamCityService : ITeamCityService
     {
         private static readonly string TC_BUILD_TYPE_ID = AppSettings["teamCity:buildTypeId:Selenium"];
+        private static readonly string TC_BASE_URI = AppSettings["teamCity:uri:base"];
         private static readonly string TC_BUILDS_URI = $@"{AppSettings["teamCity:uri:base"]}{AppSettings["teamCity:uri:builds"]}";
         private static readonly string TC_TEST_OCCURRENCES_URI = $@"{AppSettings["teamCity:uri:base"]}{AppSettings["teamCity:uri:tests"]}";
 
         private readonly HttpClient _client;
+
 
         public TeamCityService()
         {
@@ -44,7 +50,7 @@ namespace EvidentTestDashboard.Library.Services
 
         public async Task<BuildDTO> GetLatestBuild()
         {
-            String buildsJson = await _client.GetStringAsync(TC_BUILDS_URI);
+            var buildsJson = await _client.GetStringAsync(TC_BUILDS_URI);
             var buildsCollection = JsonConvert.DeserializeObject<BuildCollectionDTO>(buildsJson);
 
             var latestBuildId = await GetLatestBuildIdAsync();
@@ -52,6 +58,29 @@ namespace EvidentTestDashboard.Library.Services
             var latestBuild = JsonConvert.DeserializeObject<BuildDTO>(latestBuildJson);
 
             return latestBuild;
+        }
+
+        public async Task<IEnumerable<TestOccurrenceDTO>> GetTestOccurrencesForBuildAsync(long buildId)
+        {
+            string testOccurrencesJson =
+                await _client.GetStringAsync($"{TC_TEST_OCCURRENCES_URI}?locator=build:{buildId}");
+            var testOccurrencesCollection = JsonConvert.DeserializeObject<TestOccurrenceCollectionDTO>(testOccurrencesJson);
+
+            foreach (var test in testOccurrencesCollection.TestOccurrences)
+            {
+                var testExtendedInfoJson = await _client.GetStringAsync($"{TC_BASE_URI}{test.Href}");
+                var testExtendedInfo = JObject.Parse(testExtendedInfoJson);
+                test.Details = testExtendedInfo.Value<string>("details");
+                test.LabelName = GetLabelName(test.Name);
+            }
+
+            return testOccurrencesCollection.TestOccurrences;
+        }
+
+        private string GetLabelName(string testName)
+        {
+             //return testName.Replace("<add test name>", "").Split('.').FirstOrDefault();
+            return string.Empty;
         }
 
         private async Task<int> GetLatestBuildIdAsync()

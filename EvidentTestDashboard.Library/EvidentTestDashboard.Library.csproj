@@ -62,6 +62,7 @@
     <Compile Include="Entities\BuildType.cs" />
     <Compile Include="Entities\Dashboard.cs" />
     <Compile Include="Entities\Environment.cs" />
+    <Compile Include="Entities\Label.cs" />
     <Compile Include="Entities\TestOccurrence.cs" />
     <Compile Include="DTO\BuildCollectionDTO.cs" />
     <Compile Include="DTO\BuildBriefDTO.cs" />
@@ -76,6 +77,18 @@
     <Compile Include="Migrations\201512151500342_expandedDataModel.cs" />
     <Compile Include="Migrations\201512151500342_expandedDataModel.Designer.cs">
       <DependentUpon>201512151500342_expandedDataModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512161415314_added_label_entity.cs" />
+    <Compile Include="Migrations\201512161415314_added_label_entity.Designer.cs">
+      <DependentUpon>201512161415314_added_label_entity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512161419124_addedForeignKeyFromTestOccurrenceToLabel.cs" />
+    <Compile Include="Migrations\201512161419124_addedForeignKeyFromTestOccurrenceToLabel.Designer.cs">
+      <DependentUpon>201512161419124_addedForeignKeyFromTestOccurrenceToLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512161434472_addedFieldToTestOccurrence.cs" />
+    <Compile Include="Migrations\201512161434472_addedFieldToTestOccurrence.Designer.cs">
+      <DependentUpon>201512161434472_addedFieldToTestOccurrence.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -98,6 +111,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512151500342_expandedDataModel.resx">
       <DependentUpon>201512151500342_expandedDataModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512161415314_added_label_entity.resx">
+      <DependentUpon>201512161415314_added_label_entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512161419124_addedForeignKeyFromTestOccurrenceToLabel.resx">
+      <DependentUpon>201512161419124_addedForeignKeyFromTestOccurrenceToLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512161434472_addedFieldToTestOccurrence.resx">
+      <DependentUpon>201512161434472_addedFieldToTestOccurrence.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

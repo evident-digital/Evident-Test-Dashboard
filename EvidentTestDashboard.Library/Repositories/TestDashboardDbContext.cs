@@ -19,5 +19,6 @@ namespace EvidentTestDashboard.Library.Repositories
         public DbSet<BuildType> BuildTypes { get; set; }
         public DbSet<Build> Builds { get; set; }
         public DbSet<TestOccurrence> TestOccurences { get; set; }
+        public DbSet<Label> Labels { get; set; }
     }
 }

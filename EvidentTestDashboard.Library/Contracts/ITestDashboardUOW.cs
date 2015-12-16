@@ -11,5 +11,6 @@ namespace EvidentTestDashboard.Library.Contracts
         IRepository<BuildType> BuildTypes { get; }
         IRepository<Build> Builds { get; }
         IRepository<TestOccurrence> TestOccurrences { get; }
+        IRepository<Label> Labels { get; } 
     }
 }

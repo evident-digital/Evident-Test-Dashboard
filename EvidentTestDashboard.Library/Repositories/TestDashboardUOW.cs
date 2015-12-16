@@ -25,6 +25,7 @@ namespace EvidentTestDashboard.Library.Repositories
         public IRepository<BuildType> BuildTypes => new EFRepository<BuildType>(DbContext);
         public IRepository<Build> Builds => new EFRepository<Build>(DbContext);
         public IRepository<TestOccurrence> TestOccurrences => new EFRepository<TestOccurrence>(DbContext);
+        public IRepository<Label> Labels => new EFRepository<Label>(DbContext);
 
         private void CreateDbContext()
         {

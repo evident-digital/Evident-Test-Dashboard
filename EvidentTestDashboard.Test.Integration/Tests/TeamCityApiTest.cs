@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using EvidentTestDashboard.Library.Entities;
+using EvidentTestDashboard.Library.Repositories;
+using Xunit;
 using EvidentTestDashboard.Library.Services;
 
 namespace EvidentTestDashboard.Test.Integration.Tests

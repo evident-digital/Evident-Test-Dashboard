@@ -35,6 +35,13 @@ namespace EvidentTestDashboard.Web.Jobs
                 // Check if build doesn't already exists in the database
                 if (!_uow.Builds.GetAll().Any(b => b.TeamCityBuildId == latestBuildDTO.Id))
                 {
+                    var testOccurrencesForBuildDTO =
+                        await _teamCityService.GetTestOccurrencesForBuildAsync(latestBuild.TeamCityBuildId);
+
+                    var testOccurrencesForBuild =
+                        testOccurrencesForBuildDTO.Select(t => TestOccurrenceFactory.Instance.Create(t)).ToList();
+                    testOccurrencesForBuild.ForEach(t => latestBuild.TestOccurrences.Add(t));
+                  
                     buildType.Builds.Add(latestBuild);
                     _uow.Commit();
                 }

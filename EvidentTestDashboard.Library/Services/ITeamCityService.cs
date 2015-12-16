@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using EvidentTestDashboard.Library.DTO;
 
 namespace EvidentTestDashboard.Library.Services
@@ -7,5 +8,6 @@ namespace EvidentTestDashboard.Library.Services
     {
         Task<TestOccurrenceCollectionDTO> GetLatestBuildTestDataAsync();
         Task<BuildDTO> GetLatestBuild();
+        Task<IEnumerable<TestOccurrenceDTO>> GetTestOccurrencesForBuildAsync(long buildId);
     }
 }

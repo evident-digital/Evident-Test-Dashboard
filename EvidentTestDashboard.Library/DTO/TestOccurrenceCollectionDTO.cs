@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EvidentTestDashboard.Library.Entities;
+using Newtonsoft.Json;
 
 namespace EvidentTestDashboard.Library.DTO
 {
@@ -7,7 +7,8 @@ namespace EvidentTestDashboard.Library.DTO
     {
         public int Count { get; set; }
         public string Href { get; set; }
-        public List<TestOccurrence> TestOccurrence { get; set; }
+        [JsonProperty(PropertyName = "TestOccurrence")]
+        public List<TestOccurrenceDTO> TestOccurrences { get; set; }
         public bool Default { get; set; }
     }
 }
