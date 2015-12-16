@@ -91,12 +91,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="appSettings.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="connectionStrings.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="appSettings.config" />
+    <None Include="connectionStrings.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

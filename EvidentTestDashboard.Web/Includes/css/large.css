@@ -1,4 +1,9 @@
 ﻿@media screen and (min-width: 992px) {
+
+    .navbar-header {
+        padding-left: 8.333333333333332%;
+    }
+    
     .block .block-inner {
         min-height: 600px;
         padding-top: 0;
