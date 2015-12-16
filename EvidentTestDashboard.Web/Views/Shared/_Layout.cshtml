@@ -10,6 +10,38 @@
     <link href="~/Includes/css/medium.css" rel="stylesheet" />
     <link href="~/Includes/css/large.css" rel="stylesheet" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.js"></script>
+    <script>
+        $(function () {
+            //$('[title]').tooltip({
+            //    position: {
+            //        my: "center bottom-20",
+            //        at: "center top",
+            //        using: function (position, feedback) {
+            //            $(this).css(position);
+            //            $("<div>")
+            //              .addClass("arrow")
+            //              .addClass(feedback.vertical)
+            //              .addClass(feedback.horizontal)
+            //              .appendTo(this);
+            //        }
+            //    }
+            //});
+            $("[title]")
+    .bind("mouseleave", function (event) {
+        event.stopImmediatePropagation();
+
+        var fixed = setTimeout('$("[title]").tooltip("close")', 500);
+
+        $(".ui-tooltip").hover(
+            function () { clearTimeout(fixed); },
+            function () { $("[title]").tooltip("close"); }
+        );
+    })
+    .tooltip();
+        });
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -35,8 +67,7 @@
         <div class="row">
             <div class="body-content col-md-12">
                 @RenderBody()
-                <footer>
-                </footer>
+                <footer></footer>
             </div>
         </div>
     </div>
