@@ -14,32 +14,20 @@
     <script src="~/Scripts/jquery-ui-1.11.4.js"></script>
     <script>
         $(function () {
-            //$('[title]').tooltip({
-            //    position: {
-            //        my: "center bottom-20",
-            //        at: "center top",
-            //        using: function (position, feedback) {
-            //            $(this).css(position);
-            //            $("<div>")
-            //              .addClass("arrow")
-            //              .addClass(feedback.vertical)
-            //              .addClass(feedback.horizontal)
-            //              .appendTo(this);
-            //        }
-            //    }
-            //});
-            $("[title]")
-    .bind("mouseleave", function (event) {
-        event.stopImmediatePropagation();
-
-        var fixed = setTimeout('$("[title]").tooltip("close")', 500);
-
-        $(".ui-tooltip").hover(
-            function () { clearTimeout(fixed); },
-            function () { $("[title]").tooltip("close"); }
-        );
-    })
-    .tooltip();
+            $('[title]').tooltip({
+                position: {
+                    my: "center bottom-20",
+                    at: "center top",
+                    using: function (position, feedback) {
+                        $(this).css(position);
+                        $("<div>")
+                          .addClass("arrow")
+                          .addClass(feedback.vertical)
+                          .addClass(feedback.horizontal)
+                          .appendTo(this);
+                    }
+                }
+            });
         });
     </script>
 </head>
