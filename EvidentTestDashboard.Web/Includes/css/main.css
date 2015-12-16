@@ -77,25 +77,25 @@
             font-size: 12px;
         }
 
-            .block .block-subinfo .status:first-child {
-                border-right: 2px solid #292929;
-            }
+        .block .block-subinfo .status:first-child {
+            border-right: 2px solid #292929;
+        }
 
-            .block .block-subinfo .status:last-child {
-                border-left: 2px solid #292929;
-            }
+        .block .block-subinfo .status:last-child {
+            border-left: 2px solid #292929;
+        }
 
-            .block .block-subinfo .status.status-succes {
-                background-color: #88D07F;
-            }
+        .block .block-subinfo .status.status-succes {
+            background-color: #88D07F;
+        }
 
-            .block .block-subinfo .status.status-failed {
-                background-color: #FF6060;
-            }
+        .block .block-subinfo .status.status-failed {
+            background-color: #FF6060;
+        }
 
-            .block .block-subinfo .status.status-cancelled {
-                background-color: #949494;
-            }
+        .block .block-subinfo .status.status-cancelled {
+            background-color: #949494;
+        }
 
     .block .block-inner {
         padding: 8px;
