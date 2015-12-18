@@ -3,11 +3,14 @@ using EvidentTestDashboard.Library.Contracts;
 using EvidentTestDashboard.Library.Factories;
 using EvidentTestDashboard.Library.Services;
 using System.Linq;
+using static System.Configuration.ConfigurationManager;
 
 namespace EvidentTestDashboard.Web.Jobs
 {
     public class BuildInformationJob
     {
+        private static readonly string DEFAULT_LABEL = AppSettings["label:default"];
+
         private readonly ITestDashboardUOW _uow;
         private readonly ITeamCityService _teamCityService;
 
@@ -32,20 +35,32 @@ namespace EvidentTestDashboard.Web.Jobs
 
             if (buildType != null)
             {
-                // Check if build doesn't already exists in the database
+                buildType.Builds.Add(latestBuild);
+
+                // Check if build isn't already saved in the database
                 if (!_uow.Builds.GetAll().Any(b => b.TeamCityBuildId == latestBuildDTO.Id))
                 {
+
                     var testOccurrencesForBuildDTO =
                         await _teamCityService.GetTestOccurrencesForBuildAsync(latestBuild.TeamCityBuildId);
 
                     var testOccurrencesForBuild =
                         testOccurrencesForBuildDTO.Select(t => TestOccurrenceFactory.Instance.Create(t)).ToList();
                     testOccurrencesForBuild.ForEach(t => latestBuild.TestOccurrences.Add(t));
-                  
-                    buildType.Builds.Add(latestBuild);
+
+                    var labels = _uow.Labels.GetAll();
+                    foreach (var test in testOccurrencesForBuild)
+                    {
+                        var label = labels.SingleOrDefault(l => l.LabelName.Contains(test.Name)) ??
+                                    labels.SingleOrDefault(l => l.LabelName == DEFAULT_LABEL);
+                        label?.TestOccurrences.Add(test);
+                    }
+
                     _uow.Commit();
                 }
             }
         }
+
+       
     }
 }

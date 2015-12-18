@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EvidentTestDashboard.Library.Entities
 {
@@ -8,7 +9,7 @@ namespace EvidentTestDashboard.Library.Entities
         public static readonly string TEST_OCCURRENCE_FAILURE = "FAILURE";
 
         [Key]
-        public string TestOccurrenceId { get; set; }
+        public int TestOccurrenceId { get; set; }
 
         public string TeamCityTestOccurrenceId { get; set; }
         public string Name { get; set; }

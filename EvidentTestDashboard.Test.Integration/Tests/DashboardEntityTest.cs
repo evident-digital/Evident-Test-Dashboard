@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using EvidentTestDashboard.Library.Entities;
 using EvidentTestDashboard.Library.Repositories;
 using Xunit;
@@ -44,6 +45,7 @@ namespace EvidentTestDashboard.Test.Integration.Tests
 
             repo.Add(entity);
             dbContext.SaveChanges();
-        } 
+        }
+
     }
 }

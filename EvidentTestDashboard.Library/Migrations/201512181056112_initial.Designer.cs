@@ -7,13 +7,13 @@ namespace EvidentTestDashboard.Library.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class expandedDataModel : IMigrationMetadata
+    public sealed partial class initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(expandedDataModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201512151500342_expandedDataModel"; }
+            get { return "201512181056112_initial"; }
         }
         
         string IMigrationMetadata.Source

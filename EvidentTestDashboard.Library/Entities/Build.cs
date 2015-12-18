@@ -9,6 +9,11 @@ namespace EvidentTestDashboard.Library.Entities
         public static readonly string BUILD_SUCCESS = "SUCCESS";
         public static readonly string BUILD_FAILURE = "FAILURE";
 
+        public Build()
+        {
+            TestOccurrences = new List<TestOccurrence>();
+        }
+
         [Key]
         public int BuildId { get; set; }
 

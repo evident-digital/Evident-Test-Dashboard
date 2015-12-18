@@ -1,5 +1,7 @@
-﻿using EvidentTestDashboard.Library.DTO;
+﻿using System.Linq;
+using EvidentTestDashboard.Library.DTO;
 using EvidentTestDashboard.Library.Entities;
+using static System.Configuration.ConfigurationManager;
 
 namespace EvidentTestDashboard.Library.Factories
 {
@@ -19,10 +21,10 @@ namespace EvidentTestDashboard.Library.Factories
             return new TestOccurrence()
             {
                 TeamCityTestOccurrenceId = testOccurrence.Id,
-                Duration = testOccurrence.Duration,
+                Duration = testOccurrence.Duration.HasValue ? testOccurrence.Duration : 0,
                 Status = testOccurrence.Status,
                 Href = testOccurrence.Href,
-                Name = testOccurrence.Name,
+                Name = testOccurrence.LabelName,
                 Details = testOccurrence.Details,
                 TestOccurrenceSucceeded = ParseTestOccurrenceStatus(testOccurrence.Status)
             };
@@ -33,5 +35,7 @@ namespace EvidentTestDashboard.Library.Factories
             if (status == TestOccurrence.TEST_OCCURRENCE_SUCCESS) return true;
             return false;
         }
+
+        
     }
 }

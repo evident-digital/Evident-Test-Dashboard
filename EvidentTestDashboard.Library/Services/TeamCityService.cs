@@ -17,6 +17,7 @@ namespace EvidentTestDashboard.Library.Services
     public class TeamCityService : ITeamCityService
     {
         private static readonly string TC_BUILD_TYPE_ID = AppSettings["teamCity:buildTypeId:Selenium"];
+        private static readonly string SELENIUM_TEST_PREFIX = $"{AppSettings["selenium:testPrefix"]}{"."}";
         private static readonly string TC_BASE_URI = AppSettings["teamCity:uri:base"];
         private static readonly string TC_BUILDS_URI = $@"{AppSettings["teamCity:uri:base"]}{AppSettings["teamCity:uri:builds"]}";
         private static readonly string TC_TEST_OCCURRENCES_URI = $@"{AppSettings["teamCity:uri:base"]}{AppSettings["teamCity:uri:tests"]}";
@@ -79,8 +80,7 @@ namespace EvidentTestDashboard.Library.Services
 
         private string GetLabelName(string testName)
         {
-             //return testName.Replace("<add test name>", "").Split('.').FirstOrDefault();
-            return string.Empty;
+            return testName.Replace(SELENIUM_TEST_PREFIX, "").Replace("V2", "").Split('.').FirstOrDefault();
         }
 
         private async Task<int> GetLatestBuildIdAsync()
