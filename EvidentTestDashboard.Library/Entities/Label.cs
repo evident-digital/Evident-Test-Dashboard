@@ -12,6 +12,8 @@ namespace EvidentTestDashboard.Library.Entities
 
         public int LabelId { get; set; }
         public string LabelName { get; set; }
+        public string Regex { get; set; }
+
         public int DashboardId { get; set; }
         
         public Dashboard Dashboard { get; set; }

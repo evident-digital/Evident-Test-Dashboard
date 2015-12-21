@@ -13,7 +13,7 @@ namespace EvidentTestDashboard.Library.Entities
         [Key]
         public int DashboardId { get; set; }
         public string DashboardName { get; set; }
-
+    
         public virtual ICollection<Environment> Environments { get; set; }
         public virtual ICollection<Label> Labels { get; set; }
     }

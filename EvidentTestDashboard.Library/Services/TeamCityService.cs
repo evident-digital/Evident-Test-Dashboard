@@ -61,16 +61,16 @@ namespace EvidentTestDashboard.Library.Services
                 var testExtendedInfoJson = await _client.GetStringAsync($"{TC_BASE_URI}{test.Href}");
                 var testExtendedInfo = JObject.Parse(testExtendedInfoJson);
                 test.Details = testExtendedInfo.Value<string>("details");
-                test.LabelName = GetLabelName(test.Name);
+                test.LabelName = test.Name;
             }
 
             return testOccurrencesCollection.TestOccurrences;
         }
 
-        private string GetLabelName(string testName)
-        {
-            return testName.Replace(SELENIUM_TEST_PREFIX, "").Replace("V2", "").Split('.').FirstOrDefault();
-        }
+        //private string GetLabelName(string testName)
+        //{
+        //    return testName.Replace(SELENIUM_TEST_PREFIX, "").Replace("V2", "").Split('.').FirstOrDefault();
+        //}
 
         private async Task<IDictionary<string, int>> GetLatestBuildIdsAsync(IEnumerable<string> buildTypeIds)
         {

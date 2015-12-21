@@ -3,6 +3,7 @@ using EvidentTestDashboard.Library.Contracts;
 using EvidentTestDashboard.Library.Factories;
 using EvidentTestDashboard.Library.Services;
 using System.Linq;
+using System.Text.RegularExpressions;
 using static System.Configuration.ConfigurationManager;
 
 namespace EvidentTestDashboard.Web.Jobs
@@ -56,11 +57,10 @@ namespace EvidentTestDashboard.Web.Jobs
                             testOccurrencesForBuildDTO.Select(t => TestOccurrenceFactory.Instance.Create(t)).ToList();
                         testOccurrencesForBuild.ForEach(t => build.TestOccurrences.Add(t));
 
-                        var labels = _uow.Labels.GetAll();
+                        var labels = _uow.Labels.GetAll().ToList();
                         foreach (var test in testOccurrencesForBuild)
                         {
-                            var label = labels.SingleOrDefault(l => l.LabelName.Contains(test.Name)) ??
-                                        labels.SingleOrDefault(l => l.LabelName == DEFAULT_LABEL);
+                            var label = labels.SingleOrDefault(l => new Regex(l.Regex, RegexOptions.IgnoreCase).IsMatch(test.Name));
                             label?.TestOccurrences.Add(test);
                         }
 

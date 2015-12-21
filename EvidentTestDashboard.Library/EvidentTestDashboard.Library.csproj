@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201512210842201_removedCascadingDeleteConvention.Designer.cs">
       <DependentUpon>201512210842201_removedCascadingDeleteConvention.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512211546003_addedRegexFieldToLabel.cs" />
+    <Compile Include="Migrations\201512211546003_addedRegexFieldToLabel.Designer.cs">
+      <DependentUpon>201512211546003_addedRegexFieldToLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EFRepository.cs" />
@@ -98,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512210842201_removedCascadingDeleteConvention.resx">
       <DependentUpon>201512210842201_removedCascadingDeleteConvention.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512211546003_addedRegexFieldToLabel.resx">
+      <DependentUpon>201512211546003_addedRegexFieldToLabel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
