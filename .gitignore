@@ -214,3 +214,5 @@ ModelManifest.xml
 # Sensitive info
 appSettings.config
 connectionStrings.config
+EvidentTestDashboard.Web/Web.Release.config
+EvidentTestDashboard.Web/Properties/PublishProfiles/Release.pubxml
