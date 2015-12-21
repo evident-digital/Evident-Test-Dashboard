@@ -27,40 +27,48 @@ namespace EvidentTestDashboard.Web.Jobs
 
         public async Task CollectBuildDataAsync()
         {
-            var latestBuildDTO = await _teamCityService.GetLatestBuild();
-            var latestBuild = BuildFactory.Instance.Create(latestBuildDTO);
+            var buildTypeNames = _uow.BuildTypes.GetAll().Where(bt => bt.Environment.Dashboard.DashboardName == DEFAULT_LABEL).Select(bt => bt.BuildTypeName);
+            var latestBuildDTOs = await _teamCityService.GetLatestBuildsAsync(buildTypeNames);
 
-            var buildType =
-                _uow.BuildTypes.GetAll().FirstOrDefault(bt => bt.BuildTypeName == latestBuildDTO.BuildType.Id);
+            var latestBuilds =
+                latestBuildDTOs.Select(i => new {BuildType = i.Key, Build = BuildFactory.Instance.Create(i.Value)})
+                    .ToDictionary(i => i.BuildType, i => i.Build);
 
-            if (buildType != null)
+            foreach (var buildTypeName in latestBuilds.Keys)
             {
-                buildType.Builds.Add(latestBuild);
+                var buildType =
+                    _uow.BuildTypes.GetAll().FirstOrDefault(bt => bt.BuildTypeName == buildTypeName);
 
-                // Check if build isn't already saved in the database
-                if (!_uow.Builds.GetAll().Any(b => b.TeamCityBuildId == latestBuildDTO.Id))
+                if (buildType != null)
                 {
+                    var build = latestBuilds[buildTypeName];
 
-                    var testOccurrencesForBuildDTO =
-                        await _teamCityService.GetTestOccurrencesForBuildAsync(latestBuild.TeamCityBuildId);
+                    buildType.Builds.Add(build);
 
-                    var testOccurrencesForBuild =
-                        testOccurrencesForBuildDTO.Select(t => TestOccurrenceFactory.Instance.Create(t)).ToList();
-                    testOccurrencesForBuild.ForEach(t => latestBuild.TestOccurrences.Add(t));
-
-                    var labels = _uow.Labels.GetAll();
-                    foreach (var test in testOccurrencesForBuild)
+                    // Check if build isn't already saved in the database
+                    if (!_uow.Builds.GetAll().Any(b => b.TeamCityBuildId == build.TeamCityBuildId))
                     {
-                        var label = labels.SingleOrDefault(l => l.LabelName.Contains(test.Name)) ??
-                                    labels.SingleOrDefault(l => l.LabelName == DEFAULT_LABEL);
-                        label?.TestOccurrences.Add(test);
-                    }
 
-                    _uow.Commit();
+                        var testOccurrencesForBuildDTO =
+                            await _teamCityService.GetTestOccurrencesForBuildAsync(build.TeamCityBuildId);
+
+                        var testOccurrencesForBuild =
+                            testOccurrencesForBuildDTO.Select(t => TestOccurrenceFactory.Instance.Create(t)).ToList();
+                        testOccurrencesForBuild.ForEach(t => build.TestOccurrences.Add(t));
+
+                        var labels = _uow.Labels.GetAll();
+                        foreach (var test in testOccurrencesForBuild)
+                        {
+                            var label = labels.SingleOrDefault(l => l.LabelName.Contains(test.Name)) ??
+                                        labels.SingleOrDefault(l => l.LabelName == DEFAULT_LABEL);
+                            label?.TestOccurrences.Add(test);
+                        }
+
+                        _uow.Commit();
+                    }
                 }
             }
         }
 
-       
     }
 }

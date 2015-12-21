@@ -1,360 +1,441 @@
-﻿<div class="row">
+﻿@model EvidentTestDashboard.Web.ViewModels.DashboardViewModel
+
+<div class="row">
     <div class="col-xs-12 col-sm-12 col-md-1">
     </div>
     <div class="col-xs-12 col-sm-12 col-md-11">
         <div class="row">
-            <div class="block col-xs-12 col-sm-6 col-md-3">
-                <div class="block-title">
-                    SPRINT
-                </div>
-                <div class="block-subinfo">
-                    <span>Last run: 07-12-2015 23:33 <span>(succeeded)</span></span>
-                    <div class="status-total">
-                        <div class="container">
-                            <div class="row">
-                                <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                    80 passed
-                                </div>
-                                <div class="status status-failed col-xs-4 col-sm-4 col-md-4">
-                                    3 failed
-                                </div>
-                                <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                    0 not run
-                                </div>
-                            </div>
-                        </div>
+            @foreach (var build in Model.builds)
+            {
+                <div class="block col-xs-12 col-sm-6 col-md-3">
+                    <div class="block-title">
+                        @build.Environment.EnvironmentName
                     </div>
-                </div>
-                <div class="block-inner main-block">
-                    <span class="info">NCOI</span>
-                    <div class="parts">
-                        <div class="part" title="Hier komt informatie te staan of deze specifieke test"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part failed" title="Failed omdat: tekst over deze test"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part failed"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                    <span class="info">Scheidegger</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                    <span class="info">Computrain</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part failed"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="block col-xs-12 col-sm-6 col-md-3">
-                <div class="block-title">
-                    TEST
-                </div>
-                <div class="block-subinfo">
-                    <span>Last run: 08-12-2015 00:30 (failed)</span>
-                    <div class="status-total">
-                        <div class="container">
-                            <div class="row">
-                                <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                    82 passed
-                                </div>
-                                <div class="status status-failed col-xs-4 col-sm-4 col-md-4">
-                                    1 failed
-                                </div>
-                                <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                    0 not run
+                    <div class="block-subinfo">
+                        <span>
+                            Last run: @build.Build.RunAt <span>
+                                (@if (build.Build.BuildSucceeded)
+                                {
+                                    <span>succeeded</span>
+                                }
+                                else
+                                {
+                                    <span>failed</span>
+                                })
+                            </span>
+                        </span>
+                        <div class="status-total">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                                        @build.Build.Passed
+                                    </div>
+                                    <div class="status status-failed col-xs-4 col-sm-4 col-md-4">
+                                        @build.Build.Failed
+                                    </div>
+                                    <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                                        0 not run
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="block-inner">
-                    <span class="info">NCOI</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part failed"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                    <span class="info">Scheidegger</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                    <span class="info">Computrain</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="block col-xs-12 col-sm-6 col-md-3">
-                <div class="block-title">
-                    ACC
-                </div>
-                <div class="block-subinfo">
-                    <span>Last run: 08-12-2015 22:30 <span>(succeeded)</span></span>
-                    <div class="status-total">
-                        <div class="container">
-                            <div class="row">
-                                <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                    80 passed
-                                </div>
-                                <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                    0 failed
-                                </div>
-                                <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                    0 not run
-                                </div>
-                            </div>
+
+                    <div class="block-inner main-block">
+                        @foreach (var label in build.TestOccurrences.Keys)
+                        {
+                            <span class="info">@label</span>
+                            <div class="parts">
+                            @foreach (var test in build.TestOccurrences[label])
+                            {
+                                <div class="part @(test.TestOccurrenceSucceeded ? "" : "failed") "></div>
+                            }
+
+                            @*<div class="part" title="Hier komt informatie te staan of deze specifieke test"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part failed" title="Failed omdat: tekst over deze test"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part failed"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>
+                                <div class="part"></div>*@
                         </div>
+                        }
                     </div>
                 </div>
-                <div class="block-inner">
-                    <span class="info">NCOI</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                    <span class="info">Scheidegger</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                    <span class="info">Computrain</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="block col-xs-12 col-sm-6 col-md-3">
-                <div class="block-title">
-                    PROD
-                </div>
-                <div class="block-subinfo">
-                    <span>Last run: 08-12-2015 23:54 <span>(succeeded)</span></span>
-                    <div class="status-total">
-                        <div class="container">
-                            <div class="row">
-                                <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                    80 passed
-                                </div>
-                                <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                    0 failed
-                                </div>
-                                <div class="status status-cancelled col-xs-4 col-sm-4 col-md-4">
-                                    2 not run
-                                </div>
-                            </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*<div class="row">
+    <div class="block col-xs-12 col-sm-6 col-md-3">
+        <div class="block-title">
+            SPRINT
+        </div>
+        <div class="block-subinfo">
+            <span>Last run: 07-12-2015 23:33 <span>(succeeded)</span></span>
+            <div class="status-total">
+                <div class="container">
+                    <div class="row">
+                        <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                            80 passed
                         </div>
-                    </div>
-                </div>
-                <div class="block-inner">
-                    <span class="info">NCOI</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                    <span class="info">Scheidegger</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part cancelled"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part cancelled"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                    </div>
-                    <span class="info">Computrain</span>
-                    <div class="parts">
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
-                        <div class="part"></div>
+                        <div class="status status-failed col-xs-4 col-sm-4 col-md-4">
+                            3 failed
+                        </div>
+                        <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                            0 not run
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="block-inner main-block">
+            <span class="info">NCOI</span>
+            <div class="parts">
+                <div class="part" title="Hier komt informatie te staan of deze specifieke test"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part failed" title="Failed omdat: tekst over deze test"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part failed"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+            <span class="info">Scheidegger</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+            <span class="info">Computrain</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part failed"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+        </div>
     </div>
-</div>
+    <div class="block col-xs-12 col-sm-6 col-md-3">
+        <div class="block-title">
+            TEST
+        </div>
+        <div class="block-subinfo">
+            <span>Last run: 08-12-2015 00:30 (failed)</span>
+            <div class="status-total">
+                <div class="container">
+                    <div class="row">
+                        <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                            82 passed
+                        </div>
+                        <div class="status status-failed col-xs-4 col-sm-4 col-md-4">
+                            1 failed
+                        </div>
+                        <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                            0 not run
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-inner">
+            <span class="info">NCOI</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part failed"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+            <span class="info">Scheidegger</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+            <span class="info">Computrain</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+        </div>
+    </div>
+    <div class="block col-xs-12 col-sm-6 col-md-3">
+        <div class="block-title">
+            ACC
+        </div>
+        <div class="block-subinfo">
+            <span>Last run: 08-12-2015 22:30 <span>(succeeded)</span></span>
+            <div class="status-total">
+                <div class="container">
+                    <div class="row">
+                        <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                            80 passed
+                        </div>
+                        <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                            0 failed
+                        </div>
+                        <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                            0 not run
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-inner">
+            <span class="info">NCOI</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+            <span class="info">Scheidegger</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+            <span class="info">Computrain</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+        </div>
+    </div>
+    <div class="block col-xs-12 col-sm-6 col-md-3">
+        <div class="block-title">
+            PROD
+        </div>
+        <div class="block-subinfo">
+            <span>Last run: 08-12-2015 23:54 <span>(succeeded)</span></span>
+            <div class="status-total">
+                <div class="container">
+                    <div class="row">
+                        <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                            80 passed
+                        </div>
+                        <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
+                            0 failed
+                        </div>
+                        <div class="status status-cancelled col-xs-4 col-sm-4 col-md-4">
+                            2 not run
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-inner">
+            <span class="info">NCOI</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+            <span class="info">Scheidegger</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part cancelled"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part cancelled"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+            <span class="info">Computrain</span>
+            <div class="parts">
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+                <div class="part"></div>
+            </div>
+        </div>
+    </div>
+        </div> *@
+

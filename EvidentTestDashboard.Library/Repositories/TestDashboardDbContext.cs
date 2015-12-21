@@ -12,6 +12,7 @@ namespace EvidentTestDashboard.Library.Repositories
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
         public DbSet<Dashboard> Dashboards { get; set; }

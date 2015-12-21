@@ -22,7 +22,7 @@ namespace EvidentTestDashboard.Test.Integration.Tests
             }
             catch (DbEntityValidationException ex)
             {
-                
+
                 throw;
             }
 
