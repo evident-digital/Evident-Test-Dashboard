@@ -58,6 +58,7 @@
     <Compile Include="Contracts\IRepository.cs" />
     <Compile Include="Contracts\ITestDashboardUOW.cs" />
     <Compile Include="DTO\BuildDTO.cs" />
+    <Compile Include="EnforceReferences.cs" />
     <Compile Include="Entities\Build.cs" />
     <Compile Include="Entities\BuildType.cs" />
     <Compile Include="Entities\Dashboard.cs" />
