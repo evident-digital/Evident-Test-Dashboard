@@ -14,6 +14,7 @@ namespace EvidentTestDashboard.Library
         private EnforceReferences()
         {
             var x = typeof(System.Data.Entity.SqlServer.SqlProviderServices);
+            x.ToString(); // needed to enforce in release builds..
         }
     }
 }
