@@ -7,6 +7,6 @@ namespace EvidentTestDashboard.Web.ViewModels
     {
         public Build Build { get; set; }
         public Environment Environment { get; set; }
-        public IDictionary<string, IEnumerable<TestOccurrence>> TestOccurrences { get; set; }
+        public IDictionary<string, List<TestOccurrence>> TestOccurrences { get; set; }
     }
 }

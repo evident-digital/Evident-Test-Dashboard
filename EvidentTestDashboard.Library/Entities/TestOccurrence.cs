@@ -7,6 +7,7 @@ namespace EvidentTestDashboard.Library.Entities
     {
         public static readonly string TEST_OCCURRENCE_SUCCESS = "SUCCESS";
         public static readonly string TEST_OCCURRENCE_FAILURE = "FAILURE";
+        public static readonly string TEST_OCCURRENCE_NOT_RUN = "NOT RUN";
 
         [Key]
         public int TestOccurrenceId { get; set; }
