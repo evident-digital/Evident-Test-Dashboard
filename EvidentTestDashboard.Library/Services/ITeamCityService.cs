@@ -8,6 +8,5 @@ namespace EvidentTestDashboard.Library.Services
     {
         Task<IEnumerable<TestOccurrenceDTO>> GetTestOccurrencesForBuildAsync(long buildId);
         Task<IDictionary<string, BuildDTO>> GetLatestBuildsAsync(IEnumerable<string> buildTypes);
-        //Task<HashSet<string>> GetAllTestOccurrenceNamesAsync(IEnumerable<long> teamCityBuildId);
     }
 }

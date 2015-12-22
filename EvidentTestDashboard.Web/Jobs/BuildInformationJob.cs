@@ -26,7 +26,7 @@ namespace EvidentTestDashboard.Web.Jobs
             
         }
 
-        public async void CollectBuildDataAsync()
+        public async Task CollectBuildDataAsync()
         {
             var buildTypeNames = _uow.BuildTypes.GetAll().Where(bt => bt.Environment.Dashboard.DashboardName == DEFAULT_LABEL).Select(bt => bt.BuildTypeName);
             var latestBuildDTOs = await _teamCityService.GetLatestBuildsAsync(buildTypeNames);
@@ -44,11 +44,12 @@ namespace EvidentTestDashboard.Web.Jobs
                 {
                     var build = latestBuilds[buildTypeName];
 
-                    buildType.Builds.Add(build);
-
+                    // TODO: Find out why sometimes a build gets saved thats already in the database
                     // Check if build isn't already saved in the database
-                    if (!_uow.Builds.GetAll().Any(b => b.TeamCityBuildId == build.TeamCityBuildId))
+                    if (!_uow.Builds.GetAll().Any(b => b.TeamCityBuildId == build.TeamCityBuildId && b.BuildTypeId == buildType.BuildTypeId))
                     {
+
+                        buildType.Builds.Add(build);
 
                         var testOccurrencesForBuildDTO =
                             await _teamCityService.GetTestOccurrencesForBuildAsync(build.TeamCityBuildId);
@@ -60,7 +61,8 @@ namespace EvidentTestDashboard.Web.Jobs
                         var labels = _uow.Labels.GetAll().ToList();
                         foreach (var test in testOccurrencesForBuild)
                         {
-                            var label = labels.SingleOrDefault(l => new Regex(l.Regex, RegexOptions.IgnoreCase).IsMatch(test.Name));
+                            var label = labels.SingleOrDefault(l => l.LabelName != "Onbekend" && new Regex(l.Regex, RegexOptions.IgnoreCase).IsMatch(test.Name))
+                                ?? labels.SingleOrDefault(l => l.LabelName == "Onbekend");
                             label?.TestOccurrences.Add(test);
                         }
 
