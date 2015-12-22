@@ -26,7 +26,7 @@ namespace EvidentTestDashboard.Web.Jobs
             
         }
 
-        public async Task CollectBuildDataAsync()
+        public async void CollectBuildDataAsync()
         {
             var buildTypeNames = _uow.BuildTypes.GetAll().Where(bt => bt.Environment.Dashboard.DashboardName == DEFAULT_LABEL).Select(bt => bt.BuildTypeName);
             var latestBuildDTOs = await _teamCityService.GetLatestBuildsAsync(buildTypeNames);

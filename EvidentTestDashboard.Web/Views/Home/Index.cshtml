@@ -35,8 +35,8 @@
                                     <div class="status status-failed col-xs-4 col-sm-4 col-md-4">
                                         @build.Build.Failed
                                     </div>
-                                    <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                        0 not run
+                                    <div class="status status-cancelled col-xs-4 col-sm-4 col-md-4">
+                                        @build.TestOccurrencesNoRun
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +50,10 @@
                             <div class="parts">
                                 @foreach (var test in build.TestOccurrences[label])
                                 {
-                                    <div class="part @(test.Status == TestOccurrence.TEST_OCCURRENCE_FAILURE ? "failed" : test.Status == TestOccurrence.TEST_OCCURRENCE_NOT_RUN ? "cancelled" : "") "></div>
+                                    <div
+                                        class="part @(test.Status == TestOccurrence.TEST_OCCURRENCE_FAILURE ? "failed" : test.Status == TestOccurrence.TEST_OCCURRENCE_NOT_RUN ? "cancelled" : "")"
+                                        title="@test.Name">
+                                    </div>
                                 }
                             </div>
                         }

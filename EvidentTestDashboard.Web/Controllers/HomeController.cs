@@ -54,8 +54,11 @@ namespace EvidentTestDashboard.Web.Controllers
                     SetNotRunTests(testOccurrences, dashboard.DashboardId);
                     SortTestNamesPerLabel(testOccurrences);
 
+                    var testOccurrencesNotRun = GetTestOccurrencesNotRun(testOccurrences);
+
                     var buildViewModel = new BuildViewModel()
                     {
+                        TestOccurrencesNoRun = testOccurrencesNotRun,
                         Build = build,
                         Environment = e,
                         TestOccurrences = testOccurrences
@@ -66,6 +69,15 @@ namespace EvidentTestDashboard.Web.Controllers
             });
             
             return View(model);
+        }
+
+        private static int GetTestOccurrencesNotRun(Dictionary<string, List<TestOccurrence>> testOccurrences)
+        {
+            var testOccurrencesNotRun =
+                testOccurrences
+                    .SelectMany(l => l.Value)
+                    .Count(to => to.Status == TestOccurrence.TEST_OCCURRENCE_NOT_RUN);
+            return testOccurrencesNotRun;
         }
 
         private void SortTestNamesPerLabel(Dictionary<string, List<TestOccurrence>> testOccurrences)
