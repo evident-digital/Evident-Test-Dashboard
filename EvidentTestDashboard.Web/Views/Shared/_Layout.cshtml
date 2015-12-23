@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Test Dashboard</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Includes/css/main.css" rel="stylesheet" />
@@ -12,22 +12,10 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <script src="~/Scripts/jquery-1.11.3.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.11.4.js"></script>
+    <script src="~/Scripts/main.js"></script>
     <script>
-        $(function () {
-            $('[title]').tooltip({
-                position: {
-                    my: "center bottom-20",
-                    at: "center top",
-                    using: function (position, feedback) {
-                        $(this).css(position);
-                        $("<div>")
-                          .addClass("arrow")
-                          .addClass(feedback.vertical)
-                          .addClass(feedback.horizontal)
-                          .appendTo(this);
-                    }
-                }
-            });
+        $(document).ready(function () {
+            tooltip();
         });
     </script>
 </head>
