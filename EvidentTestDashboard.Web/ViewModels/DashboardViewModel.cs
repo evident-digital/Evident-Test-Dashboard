@@ -6,6 +6,6 @@ namespace EvidentTestDashboard.Web.ViewModels
     public class DashboardViewModel
     {
         public Dashboard Dashboard { get; set; }
-        public ICollection<BuildViewModel> builds { get; set; } = new List<BuildViewModel>();
+        public ICollection<AggregateBuildsViewModel> builds { get; set; } = new List<AggregateBuildsViewModel>();
     }
 }

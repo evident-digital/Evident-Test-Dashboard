@@ -8,17 +8,10 @@ namespace EvidentTestDashboard.Test.Integration.Tests
     public class HomeControllerTest
     {
         [Fact]
-        public void ShouldReturnLatestBuildIds()
+        public void ShouldReturnLatestBuildsPerBuildType()
         {
             var controller = new HomeController(new TestDashboardUOW(), new TeamCityService());
-            controller.GetTestOccurrenceNamesForAllEnvironments();
-        }
-
-        [Fact]
-        public void ShoudReturnAllTestNamesPerLabel()
-        {
-            var controller = new HomeController(new TestDashboardUOW(), new TeamCityService());
-            var result = controller.GetAllTestNamesPerLabel(1);
+            var result = controller.GetLatestBuildsPerBuildType(1);
         }
     }
 }

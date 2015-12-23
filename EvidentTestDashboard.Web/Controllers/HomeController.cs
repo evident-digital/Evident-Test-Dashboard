@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using EvidentTestDashboard.Library.Contracts;
 using EvidentTestDashboard.Library.Entities;
 using EvidentTestDashboard.Library.Services;
 using EvidentTestDashboard.Web.ViewModels;
 using static System.Configuration.ConfigurationManager;
+using Environment = EvidentTestDashboard.Library.Entities.Environment;
 
 namespace EvidentTestDashboard.Web.Controllers
 {
@@ -34,34 +34,29 @@ namespace EvidentTestDashboard.Web.Controllers
             };
 
             var environments = _uow.Environments.GetAll().Where(e => e.DashboardId == dashboard.DashboardId);
+            var labels = _uow.Labels.GetAll().Where(l => l.Dashboard.DashboardId == dashboard.DashboardId).ToList();
             environments.ToList().ForEach(e =>
             {
                 if (_uow.Builds.GetAll().Any(b => b.BuildType.EnvironmentId == e.EnvironmentId))
                 {
-                    var build =
-                    _uow.Builds.GetAll()
-                        .Where(b => b.BuildType.EnvironmentId == e.EnvironmentId)
-                        .OrderByDescending(b => b.RunAt)
-                        .FirstOrDefault();
+                    // There can be multiple latest builds (one for each BuildType for the given environment)
+                    var builds = GetLatestBuildsForEnvironment(e);
 
-                    var labels = _uow.Labels.GetAll().Where(l => l.Dashboard.DashboardId == dashboard.DashboardId);
-                    var testOccurrences = new Dictionary<string, List<TestOccurrence>>();
-                    labels.ToList().ForEach(l => testOccurrences.Add(
-                        l.LabelName,
-                        _uow.TestOccurrences.GetAll()
-                            .Where(to => to.Build.BuildId == build.BuildId && to.Label.LabelName == l.LabelName).OrderBy(t => t.Name).ToList()));
+                    var testOccurrences = GetTestOccurrencesForBuildsPerLabel(builds, labels);
 
                     SetNotRunTests(testOccurrences, dashboard.DashboardId);
                     SortTestNamesPerLabel(testOccurrences);
 
-                    var testOccurrencesNotRun = GetTestOccurrencesNotRun(testOccurrences);
-
-                    var buildViewModel = new BuildViewModel()
+                    // Contains data for 1 or more builds per Environment
+                    var buildViewModel = new AggregateBuildsViewModel()
                     {
-                        TestOccurrencesNoRun = testOccurrencesNotRun,
-                        Build = build,
-                        Environment = e,
-                        TestOccurrences = testOccurrences
+                        TestsNotRun = GetCountTestOccurrencesNotRun(testOccurrences),
+                        TestsPassed = builds.Sum(b => b.Passed),
+                        TestsFailed = builds.Sum(b => b.Failed),
+                        BuildSucceeded = builds.All(b => b.BuildSucceeded),
+                        EnvironmentName = e.EnvironmentName,
+                        TestOccurrences = testOccurrences,
+                        LastRun = builds.Max(b => b.RunAt)
                     };
 
                     model.builds.Add(buildViewModel);
@@ -71,7 +66,40 @@ namespace EvidentTestDashboard.Web.Controllers
             return View(model);
         }
 
-        private static int GetTestOccurrencesNotRun(Dictionary<string, List<TestOccurrence>> testOccurrences)
+        private Dictionary<string, List<TestOccurrence>> GetTestOccurrencesForBuildsPerLabel(IEnumerable<Build> builds, List<Label> labels)
+        {
+            var testOccurrences = new Dictionary<string, List<TestOccurrence>>();
+
+            foreach (var build in builds)
+            {
+                labels.ForEach(l =>
+                {
+                    var tests = _uow.TestOccurrences.GetAll()
+                        .Where(to => to.Build.BuildId == build.BuildId && to.Label.LabelName == l.LabelName)
+                        .OrderBy(t => t.Name)
+                        .ToList();
+                    if (testOccurrences.ContainsKey(l.LabelName))
+                        testOccurrences[l.LabelName].AddRange(tests);
+                    else
+                        testOccurrences.Add(l.LabelName, tests);
+                });
+            }
+
+            return testOccurrences;
+        }
+
+        private IEnumerable<Build> GetLatestBuildsForEnvironment(Environment e)
+        {
+            var builds = _uow.Builds.GetAll()
+                .Where(b => b.BuildType.EnvironmentId == e.EnvironmentId)
+                .GroupBy(b => b.BuildType,
+                    (key, values) => values.Where(bt => bt.RunAt == values.Max(x => x.RunAt)))
+                .SelectMany(x => x)
+                .ToList();
+            return builds;
+        }
+
+        private int GetCountTestOccurrencesNotRun(Dictionary<string, List<TestOccurrence>> testOccurrences)
         {
             var testOccurrencesNotRun =
                 testOccurrences
@@ -91,62 +119,77 @@ namespace EvidentTestDashboard.Web.Controllers
         private void SetNotRunTests(Dictionary<string, List<TestOccurrence>> testOccurrences, int dashboardId)
         {
             var allTestNames = GetAllTestNamesPerLabel(dashboardId);
-
-            foreach (var label in allTestNames.Keys)
+            foreach (KeyValuePair<Label, IEnumerable<TestOccurrence>> entry in allTestNames)
             {
-                foreach (var testName in allTestNames[label])
-                {
-                    if (!testOccurrences[label].Select(to => to.Name).Contains(testName))
-                    {
-                        testOccurrences[label].Add(new TestOccurrence() { Name = testName, Status = TestOccurrence.TEST_OCCURRENCE_NOT_RUN });
-                    }                    
-                }
+                var missingTests = entry.Value.Where(
+                    to => !testOccurrences[entry.Key.LabelName]
+                        .Select(t => t.Name)
+                        .Contains(to.Name))
+                    .Select(to => new TestOccurrence() {Name = to.Name, Status = TestOccurrence.TEST_OCCURRENCE_NOT_RUN});
+
+                testOccurrences[entry.Key.LabelName].AddRange(missingTests);
             }
         }
 
-        public IDictionary<string, IEnumerable<string>> GetAllTestNamesPerLabel(int dashboardId)
+        public IDictionary<Label, IEnumerable<TestOccurrence>> GetAllTestNamesPerLabel(int dashboardId)
         {
-            var testOccurrences = new Dictionary<string, IEnumerable<string>>();
-            var testNames = GetTestOccurrenceNamesForAllEnvironments();
-            var labels = _uow.Labels.GetAll().Where(l => l.Dashboard.DashboardId == dashboardId);
-            labels.ToList()
-                .ForEach(
-                    l =>
-                        testOccurrences.Add(l.LabelName,
-                            testNames.Where(tn => new Regex(l.Regex, RegexOptions.IgnoreCase).IsMatch(tn))));
-
-            return testOccurrences;
-        }
-
-        public HashSet<string> GetTestOccurrenceNamesForAllEnvironments()
-        {
-            // The buildId of the latest build for each buildType
-            var buildIds = _uow.Builds.GetAll()
-                .GroupBy(b => b.BuildTypeId,
-                    (key, values) =>
-                        new
-                        {
-                            BuildTypeId = key,
-                            RunAt = values.Max(b => b.RunAt),
-                            TeamCityBuildId = values.Max(b => b.TeamCityBuildId)
-                        })
-                .Select(b => b.TeamCityBuildId);
-
-            var result =  GetAllTestOccurrenceNames(buildIds);
-
-            return result;
-        }
-
-        public HashSet<string> GetAllTestOccurrenceNames(IEnumerable<long> teamCityBuildIds)
-        {
-            var allTestOccurrenceNames = new HashSet<string>();
-            teamCityBuildIds.ToList().ForEach(id =>
+            // Get the tests for each BuildTypes latest build
+            List<TestOccurrence> testOccurrences = new List<TestOccurrence>();
+            var latestBuilds = GetLatestBuildsPerBuildType(dashboardId);
+            latestBuilds.ToList().ForEach(b =>
             {
-                var testNames = _uow.TestOccurrences.GetAll().Where(to => to.Build.TeamCityBuildId == id).Select(to => to.Name);
-                allTestOccurrenceNames.UnionWith(testNames);
+                testOccurrences.AddRange(_uow.TestOccurrences.GetAll().Where(to => to.BuildId == b.BuildId));
             });
 
-            return allTestOccurrenceNames;
+            // Group the tests per label
+            var testOccurrencesPerLabel = testOccurrences
+                .GroupBy(to => to.Label)
+                .ToDictionary(g => g.Key, g => g.Key.TestOccurrences.AsEnumerable());
+
+            return testOccurrencesPerLabel;
         }
+
+        public IEnumerable<Build> GetLatestBuildsPerBuildType(int dashboardId)
+        {
+            var builds = _uow.Builds.GetAll()
+                .Where(b => b.BuildType.Environment.DashboardId == dashboardId)
+                .GroupBy(b => b.BuildTypeId,
+                    (key, values) => values.Where(b => b.RunAt == values.Max(x => x.RunAt)))
+                .SelectMany(x => x)
+                .ToList();
+
+            return builds;
+        }
+
+        //public HashSet<string> GetTestOccurrenceNamesForAllEnvironments()
+        //{
+        //    // The buildId of the latest build for each buildType
+        //    var buildIds = _uow.Builds.GetAll()
+        //        .GroupBy(b => b.BuildTypeId,
+        //            (key, values) =>
+        //                new
+        //                {
+        //                    BuildTypeId = key,
+        //                    RunAt = values.Max(b => b.RunAt),
+        //                    TeamCityBuildId = values.Max(b => b.TeamCityBuildId)
+        //                })
+        //        .Select(b => b.TeamCityBuildId);
+
+        //    var result =  GetAllTestOccurrenceNames(buildIds);
+
+        //    return result;
+        //}
+
+        //public HashSet<string> GetAllTestOccurrenceNames(IEnumerable<long> teamCityBuildIds)
+        //{
+        //    var allTestOccurrenceNames = new HashSet<string>();
+        //    teamCityBuildIds.ToList().ForEach(id =>
+        //    {
+        //        var testNames = _uow.TestOccurrences.GetAll().Where(to => to.Build.TeamCityBuildId == id).Select(to => to.Name);
+        //        allTestOccurrenceNames.UnionWith(testNames);
+        //    });
+
+        //    return allTestOccurrenceNames;
+        //}
     }
 }

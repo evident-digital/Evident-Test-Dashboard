@@ -179,7 +179,7 @@
     </Compile>
     <Compile Include="Jobs\BuildInformationJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\BuildViewModel.cs" />
+    <Compile Include="ViewModels\AggregateBuildsViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -21,11 +21,6 @@ namespace EvidentTestDashboard.Web.Jobs
             _teamCityService = teamCityService;
         }
 
-        public void Schedule()
-        {
-            
-        }
-
         public async Task CollectBuildDataAsync()
         {
             var buildTypeNames = _uow.BuildTypes.GetAll().Where(bt => bt.Environment.Dashboard.DashboardName == DEFAULT_LABEL).Select(bt => bt.BuildTypeName);
@@ -44,11 +39,9 @@ namespace EvidentTestDashboard.Web.Jobs
                 {
                     var build = latestBuilds[buildTypeName];
 
-                    // TODO: Find out why sometimes a build gets saved thats already in the database
                     // Check if build isn't already saved in the database
                     if (!_uow.Builds.GetAll().Any(b => b.TeamCityBuildId == build.TeamCityBuildId && b.BuildTypeId == buildType.BuildTypeId))
                     {
-
                         buildType.Builds.Add(build);
 
                         var testOccurrencesForBuildDTO =
