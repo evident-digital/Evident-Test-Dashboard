@@ -114,8 +114,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\BuildInformationJobTest.cs" />
-    <Compile Include="Tests\DashboardEntityTest.cs" />
-    <Compile Include="Tests\HomeControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

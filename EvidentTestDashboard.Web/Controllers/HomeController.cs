@@ -160,36 +160,5 @@ namespace EvidentTestDashboard.Web.Controllers
 
             return builds;
         }
-
-        //public HashSet<string> GetTestOccurrenceNamesForAllEnvironments()
-        //{
-        //    // The buildId of the latest build for each buildType
-        //    var buildIds = _uow.Builds.GetAll()
-        //        .GroupBy(b => b.BuildTypeId,
-        //            (key, values) =>
-        //                new
-        //                {
-        //                    BuildTypeId = key,
-        //                    RunAt = values.Max(b => b.RunAt),
-        //                    TeamCityBuildId = values.Max(b => b.TeamCityBuildId)
-        //                })
-        //        .Select(b => b.TeamCityBuildId);
-
-        //    var result =  GetAllTestOccurrenceNames(buildIds);
-
-        //    return result;
-        //}
-
-        //public HashSet<string> GetAllTestOccurrenceNames(IEnumerable<long> teamCityBuildIds)
-        //{
-        //    var allTestOccurrenceNames = new HashSet<string>();
-        //    teamCityBuildIds.ToList().ForEach(id =>
-        //    {
-        //        var testNames = _uow.TestOccurrences.GetAll().Where(to => to.Build.TeamCityBuildId == id).Select(to => to.Name);
-        //        allTestOccurrenceNames.UnionWith(testNames);
-        //    });
-
-        //    return allTestOccurrenceNames;
-        //}
     }
 }

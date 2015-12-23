@@ -89,9 +89,7 @@
     <Compile Include="Repositories\TestDashboardDbContext.cs" />
     <Compile Include="Repositories\TestDashboardUOW.cs" />
     <Compile Include="Services\ITeamCityService.cs" />
-    <Compile Include="Services\ITestDashboard.cs" />
     <Compile Include="Services\TeamCityService.cs" />
-    <Compile Include="Services\TestDashboard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
