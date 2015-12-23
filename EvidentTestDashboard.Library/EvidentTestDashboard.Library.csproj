@@ -58,10 +58,12 @@
     <Compile Include="Contracts\IRepository.cs" />
     <Compile Include="Contracts\ITestDashboardUOW.cs" />
     <Compile Include="DTO\BuildDTO.cs" />
+    <Compile Include="EnforceReferences.cs" />
     <Compile Include="Entities\Build.cs" />
     <Compile Include="Entities\BuildType.cs" />
     <Compile Include="Entities\Dashboard.cs" />
     <Compile Include="Entities\Environment.cs" />
+    <Compile Include="Entities\Label.cs" />
     <Compile Include="Entities\TestOccurrence.cs" />
     <Compile Include="DTO\BuildCollectionDTO.cs" />
     <Compile Include="DTO\BuildBriefDTO.cs" />
@@ -69,13 +71,17 @@
     <Compile Include="DTO\TestOccurrenceDTO.cs" />
     <Compile Include="Factories\BuildFactory.cs" />
     <Compile Include="Factories\TestOccurrenceFactory.cs" />
-    <Compile Include="Migrations\201512141418113_initial.cs" />
-    <Compile Include="Migrations\201512141418113_initial.Designer.cs">
-      <DependentUpon>201512141418113_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201512181056112_initial.cs" />
+    <Compile Include="Migrations\201512181056112_initial.Designer.cs">
+      <DependentUpon>201512181056112_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201512151500342_expandedDataModel.cs" />
-    <Compile Include="Migrations\201512151500342_expandedDataModel.Designer.cs">
-      <DependentUpon>201512151500342_expandedDataModel.cs</DependentUpon>
+    <Compile Include="Migrations\201512210842201_removedCascadingDeleteConvention.cs" />
+    <Compile Include="Migrations\201512210842201_removedCascadingDeleteConvention.Designer.cs">
+      <DependentUpon>201512210842201_removedCascadingDeleteConvention.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512211546003_addedRegexFieldToLabel.cs" />
+    <Compile Include="Migrations\201512211546003_addedRegexFieldToLabel.Designer.cs">
+      <DependentUpon>201512211546003_addedRegexFieldToLabel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,19 +93,22 @@
     <Compile Include="Services\TeamCityService.cs" />
     <Compile Include="Services\TestDashboard.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512141418113_initial.resx">
-      <DependentUpon>201512141418113_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512181056112_initial.resx">
+      <DependentUpon>201512181056112_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512151500342_expandedDataModel.resx">
-      <DependentUpon>201512151500342_expandedDataModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512210842201_removedCascadingDeleteConvention.resx">
+      <DependentUpon>201512210842201_removedCascadingDeleteConvention.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512211546003_addedRegexFieldToLabel.resx">
+      <DependentUpon>201512211546003_addedRegexFieldToLabel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -13,7 +13,7 @@ namespace EvidentTestDashboard.Library.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201512141418113_initial"; }
+            get { return "201512181056112_initial"; }
         }
         
         string IMigrationMetadata.Source

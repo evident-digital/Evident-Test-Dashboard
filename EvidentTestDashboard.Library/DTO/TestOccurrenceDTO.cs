@@ -7,5 +7,7 @@
         public string Status { get; set; }
         public string Href { get; set; }
         public int? Duration { get; set; }
+        public string Details { get; set; }
+        public string LabelName { get; set; }
     }
 }

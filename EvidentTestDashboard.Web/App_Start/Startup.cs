@@ -1,4 +1,5 @@
-﻿using Hangfire;
+﻿using EvidentTestDashboard.Web.Jobs;
+using Hangfire;
 using Microsoft.Owin;
 using Owin;
 
@@ -11,6 +12,8 @@ namespace EvidentTestDashboard.Web
         public void Configuration(IAppBuilder app)
         {
             GlobalConfiguration.Configuration.UseSqlServerStorage("default");
+            GlobalConfiguration.Configuration.UseNinjectActivator(
+                                     new Ninject.Web.Common.Bootstrapper().Kernel);
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();

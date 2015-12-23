@@ -12,7 +12,17 @@ namespace EvidentTestDashboard.Library.Migrations
                 c => new
                     {
                         BuildId = c.Int(nullable: false, identity: true),
+                        TotalTestsRun = c.Int(nullable: false),
+                        Passed = c.Int(nullable: false),
+                        Failed = c.Int(nullable: false),
+                        TeamCityBuildId = c.Long(nullable: false),
+                        RunAt = c.DateTime(nullable: false),
+                        Number = c.String(),
+                        Status = c.String(),
+                        State = c.String(),
+                        Href = c.String(),
                         WebUrl = c.String(),
+                        BuildSucceeded = c.Boolean(nullable: false),
                         BuildTypeId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.BuildId)
@@ -56,26 +66,47 @@ namespace EvidentTestDashboard.Library.Migrations
                 "dbo.TestOccurrence",
                 c => new
                     {
-                        TestOccurrenceId = c.String(nullable: false, maxLength: 128),
+                        TestOccurrenceId = c.Int(nullable: false, identity: true),
+                        TeamCityTestOccurrenceId = c.String(),
                         Name = c.String(),
+                        Status = c.String(),
+                        Href = c.String(),
+                        Duration = c.Int(),
+                        Details = c.String(),
+                        TestOccurrenceSucceeded = c.Boolean(nullable: false),
                         BuildId = c.Int(nullable: false),
+                        LabelId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.TestOccurrenceId)
                 .ForeignKey("dbo.Build", t => t.BuildId, cascadeDelete: true)
-                .Index(t => t.BuildId);
+                .ForeignKey("dbo.Label", t => t.LabelId, cascadeDelete: true)
+                .Index(t => t.BuildId)
+                .Index(t => t.LabelId);
+            
+            CreateTable(
+                "dbo.Label",
+                c => new
+                    {
+                        LabelId = c.Int(nullable: false, identity: true),
+                        LabelName = c.String(),
+                    })
+                .PrimaryKey(t => t.LabelId);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.TestOccurrence", "LabelId", "dbo.Label");
             DropForeignKey("dbo.TestOccurrence", "BuildId", "dbo.Build");
             DropForeignKey("dbo.Environment", "DashboardId", "dbo.Dashboard");
             DropForeignKey("dbo.BuildType", "EnvironmentId", "dbo.Environment");
             DropForeignKey("dbo.Build", "BuildTypeId", "dbo.BuildType");
+            DropIndex("dbo.TestOccurrence", new[] { "LabelId" });
             DropIndex("dbo.TestOccurrence", new[] { "BuildId" });
             DropIndex("dbo.Environment", new[] { "DashboardId" });
             DropIndex("dbo.BuildType", new[] { "EnvironmentId" });
             DropIndex("dbo.Build", new[] { "BuildTypeId" });
+            DropTable("dbo.Label");
             DropTable("dbo.TestOccurrence");
             DropTable("dbo.Dashboard");
             DropTable("dbo.Environment");
