@@ -14,19 +14,7 @@ namespace EvidentTestDashboard.Test.Integration.Tests
         public async void ShouldAddLatestBuildToDb()
         {
             var sut = new BuildInformationJob(new TestDashboardUOW(), new TeamCityService());
-
-            try
-            {
-                await sut.CollectBuildDataAsync();
-
-            }
-            catch (DbEntityValidationException ex)
-            {
-
-                throw;
-            }
-
-            string bla = "";
+            await sut.CollectBuildDataAsync();
         }
     }
 }
