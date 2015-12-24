@@ -1,4 +1,6 @@
-﻿using EvidentTestDashboard.Web.Jobs;
+﻿using EvidentTestDashboard.Library.Repositories;
+using EvidentTestDashboard.Library.Services;
+using EvidentTestDashboard.Web.Jobs;
 using Hangfire;
 using Microsoft.Owin;
 using Owin;
@@ -17,6 +19,7 @@ namespace EvidentTestDashboard.Web
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
+            new HangfireJobs().Register();
         }
     }
 }
