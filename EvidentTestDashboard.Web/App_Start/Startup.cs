@@ -1,5 +1,6 @@
 ﻿using EvidentTestDashboard.Library.Repositories;
 using EvidentTestDashboard.Library.Services;
+using EvidentTestDashboard.Web.Authorization;
 using EvidentTestDashboard.Web.Jobs;
 using Hangfire;
 using Microsoft.Owin;
@@ -17,7 +18,10 @@ namespace EvidentTestDashboard.Web
             GlobalConfiguration.Configuration.UseNinjectActivator(
                                      new Ninject.Web.Common.Bootstrapper().Kernel);
 
-            app.UseHangfireDashboard();
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                AuthorizationFilters = new[] { new NoAuthorizationFilter() }
+            });
             app.UseHangfireServer();
             new HangfireJobs().Register();
         }
