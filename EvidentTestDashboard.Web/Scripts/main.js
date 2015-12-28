@@ -14,3 +14,13 @@
         }
     });
 };
+
+function checkEmptyPart() {
+    $(".parts").each(function () {
+        if ($(this).children().length == 0) {
+            $(this).prev('.info').hide();
+            $(this).hide();
+        } else {
+        }
+    });
+};
