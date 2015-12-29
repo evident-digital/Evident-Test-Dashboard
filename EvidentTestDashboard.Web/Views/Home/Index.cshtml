@@ -46,15 +46,16 @@
                     <div class="block-inner @(i > 0 ? "" : "main-block")">
                         @foreach (var label in build.TestOccurrences.Keys)
                         {
-                            <span class="info">@label</span>
-                            <div class="parts">
-                                @foreach (var test in build.TestOccurrences[label])
-                                {
-                                    <div
-                                        class="part @(test.Status == TestOccurrence.TEST_OCCURRENCE_FAILURE ? "failed" : test.Status == TestOccurrence.TEST_OCCURRENCE_NOT_RUN ? "cancelled" : "")"
-                                        title="@test.Name">
-                                    </div>
-                                }
+                            <div class="set">
+                                <span class="info">@label</span>
+                                <div class="parts">
+                                    @foreach (var test in build.TestOccurrences[label])
+                                    {
+                                        <div class="part @(test.Status == TestOccurrence.TEST_OCCURRENCE_FAILURE ? "failed" : test.Status == TestOccurrence.TEST_OCCURRENCE_NOT_RUN ? "cancelled" : "")"
+                                             title="@test.Name">
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         }
                     </div>

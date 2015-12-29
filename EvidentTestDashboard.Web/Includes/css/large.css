@@ -3,23 +3,24 @@
     .navbar-header {
         padding-left: 8.333333333333332%;
     }
-    
+
     .block .block-inner {
         min-height: 600px;
         padding-top: 0;
     }
 
-        .block .block-inner .info {
-            position: absolute;
-            left: -80px;
-            width: 80px;
-            text-align: right;
-            padding-top: 11px;
-            color: #9E9E9E;
+        .block .block-inner .set {
+            position: relative;
+            margin-top: 14px;
         }
 
-        .block .block-inner .parts {
-            margin-top: 14px;
+        .block .block-inner .info {
+            position: absolute;
+            left: -100px;
+            width: 80px;
+            text-align: right;
+            color: #9E9E9E;
+            top: 0;
         }
 
             .block .block-inner .parts .part {
