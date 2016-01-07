@@ -9,6 +9,7 @@ using EvidentTestDashboard.Library.DTO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using static System.Configuration.ConfigurationManager;
+using System.Web;
 
 namespace EvidentTestDashboard.Library.Services
 {
@@ -33,16 +34,16 @@ namespace EvidentTestDashboard.Library.Services
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<IDictionary<string, BuildDTO>> GetLatestBuildsAsync(IEnumerable<string> buildTypes)
+        public async Task<IEnumerable<BuildDTO>> GetBuildsAsync(IEnumerable<string> buildTypes, DateTime sinceDate)
         {
-            var result = new Dictionary<string, BuildDTO>();
+            var result = new List<BuildDTO>();
 
-            var latestBuildIds = await GetLatestBuildIdsAsync(buildTypes);
-            foreach (var buildType in latestBuildIds.Keys)
+            var buildCollection = await GetBuildCollectionAsync(sinceDate);
+            foreach (var buildBrief in buildCollection.Builds.Where(b => buildTypes.Any(bt => bt == b.BuildTypeId)))
             {
-                var buildJson = await _client.GetStringAsync($"{TC_BUILDS_URI}/id:{latestBuildIds[buildType]}");
+                var buildJson = await _client.GetStringAsync($"{TC_BUILDS_URI}/id:{buildBrief.Id}");
                 var build = JsonConvert.DeserializeObject<BuildDTO>(buildJson);
-                result.Add(buildType, build);
+                result.Add(build);
             }
 
             return result;
@@ -92,6 +93,18 @@ namespace EvidentTestDashboard.Library.Services
             return result;
         }
 
-        
+        public async Task<BuildCollectionDTO> GetBuildCollectionAsync(DateTime sinceDate)
+        {
+            // I could use string format here, but it got to complicated because of all the replaces I had to do..
+            var restUrl = TC_BUILDS_URI
+                + "?locator=sinceDate:"
+                + HttpUtility.UrlEncode(sinceDate.ToString("yyyyMMddTHHmmsszzz").Replace(":", ""));
+            var buildsJson = await _client.GetStringAsync(restUrl);
+            var buildsCollection = JsonConvert.DeserializeObject<BuildCollectionDTO>(buildsJson);
+
+            return buildsCollection;
+        }
+
+
     }
 }

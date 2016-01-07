@@ -5,6 +5,8 @@ using EvidentTestDashboard.Library.Services;
 using System.Linq;
 using System.Text.RegularExpressions;
 using static System.Configuration.ConfigurationManager;
+using EvidentTestDashboard.Library.Entities;
+using System;
 
 namespace EvidentTestDashboard.Web.Jobs
 {
@@ -23,25 +25,42 @@ namespace EvidentTestDashboard.Web.Jobs
 
         public async Task CollectBuildDataAsync()
         {
-            var buildTypeNames = _uow.BuildTypes.GetAll().Where(bt => bt.Environment.Dashboard.DashboardName == DEFAULT_LABEL).Select(bt => bt.BuildTypeName);
-            var latestBuildDTOs = await _teamCityService.GetLatestBuildsAsync(buildTypeNames);
+            var buildTypeNames = _uow.BuildTypes.GetAll().Where(bt => bt.Environment.Dashboard.DashboardName == DEFAULT_LABEL).Select(bt => bt.BuildTypeName).Distinct();
+            var latestBuildDTOs = await _teamCityService.GetBuildsAsync(buildTypeNames, DateTime.Now.AddDays(-1.0));
 
-            var latestBuilds =
-                latestBuildDTOs.Select(i => new {BuildType = i.Key, Build = BuildFactory.Instance.Create(i.Value)})
-                    .ToDictionary(i => i.BuildType, i => i.Build);
+            var latestBuilds = latestBuildDTOs
+                .Select(bDto => BuildFactory.Instance.Create(bDto))
+                .ToDictionary(b => b.TeamCityBuildId, b => b);
 
-            foreach (var buildTypeName in latestBuilds.Keys)
+            foreach (var buildDto in latestBuildDTOs)
             {
-                var buildType =
-                    _uow.BuildTypes.GetAll().FirstOrDefault(bt => bt.BuildTypeName == buildTypeName);
+                var buildTypes =
+                    _uow.BuildTypes.GetAll().Where(bt => bt.BuildTypeName == buildDto.BuildTypeId).ToList();
 
-                if (buildType != null)
+                if (buildTypes != null && buildTypes.Any())
                 {
-                    var build = latestBuilds[buildTypeName];
+                    var build = latestBuilds[buildDto.Id];
 
                     // Check if build isn't already saved in the database
-                    if (!_uow.Builds.GetAll().Any(b => b.TeamCityBuildId == build.TeamCityBuildId && b.BuildTypeId == buildType.BuildTypeId))
+                    if (!_uow.Builds.GetAll().Any(b => b.TeamCityBuildId == buildDto.Id))
                     {
+                        BuildType buildType = null;
+                        if (buildTypes.Count > 1)
+                        {
+                            // we have multiple build types of the same name..
+                            // prob. because we have a parameter we need to check..
+                            buildType = buildTypes.FirstOrDefault(bt => {
+                                return buildDto.Properties.Property.Any(p => p.Name == bt.RequiredParamName && p.Value == bt.RequiredParamValue);
+                            });
+                        }
+                        else
+                        {
+                            buildType = buildTypes.First();
+                        }
+                        if(buildType == null)
+                        {
+                            continue;
+                        }
                         buildType.Builds.Add(build);
 
                         var testOccurrencesForBuildDTO =
