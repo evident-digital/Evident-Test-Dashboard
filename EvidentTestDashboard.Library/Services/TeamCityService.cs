@@ -56,6 +56,9 @@ namespace EvidentTestDashboard.Library.Services
             var testOccurrencesCollection =
                 JsonConvert.DeserializeObject<TestOccurrenceCollectionDTO>(testOccurrencesJson);
 
+            if (testOccurrencesCollection?.TestOccurrences == null)
+                return new TestOccurrenceDTO[0];
+
             foreach (var test in testOccurrencesCollection.TestOccurrences)
             {
                 var testExtendedInfoJson = await _client.GetStringAsync($"{TC_BASE_URI}{test.Href}");

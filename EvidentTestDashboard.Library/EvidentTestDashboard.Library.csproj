@@ -72,6 +72,7 @@
     <Compile Include="DTO\TestOccurrenceDTO.cs" />
     <Compile Include="Factories\BuildFactory.cs" />
     <Compile Include="Factories\TestOccurrenceFactory.cs" />
+    <Compile Include="Jobs\BuildInformationJob.cs" />
     <Compile Include="Migrations\201512181056112_initial.cs" />
     <Compile Include="Migrations\201512181056112_initial.Designer.cs">
       <DependentUpon>201512181056112_initial.cs</DependentUpon>

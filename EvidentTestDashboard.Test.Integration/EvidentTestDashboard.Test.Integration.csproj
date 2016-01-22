@@ -118,19 +118,19 @@
     <Compile Include="Tests\TeamCityServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="appSettings.config" />
-    <None Include="connectionStrings.config" />
+    <None Include="connectionStrings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EvidentTestDashboard.Library\EvidentTestDashboard.Library.csproj">
       <Project>{5b7caefe-765e-44e0-9b96-21d72edc18ef}</Project>
       <Name>EvidentTestDashboard.Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EvidentTestDashboard.Web\EvidentTestDashboard.Web.csproj">
-      <Project>{3a7e28e4-5fe6-4f0c-bcde-2801292f42ab}</Project>
-      <Name>EvidentTestDashboard.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

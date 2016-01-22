@@ -8,7 +8,7 @@ using static System.Configuration.ConfigurationManager;
 using EvidentTestDashboard.Library.Entities;
 using System;
 
-namespace EvidentTestDashboard.Web.Jobs
+namespace EvidentTestDashboard.Library.Jobs
 {
     public class BuildInformationJob
     {

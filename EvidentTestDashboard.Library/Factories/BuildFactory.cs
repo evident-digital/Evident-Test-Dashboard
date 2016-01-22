@@ -26,9 +26,9 @@ namespace EvidentTestDashboard.Library.Factories
                 WebUrl = build.WebUrl,
                 BuildSucceeded = ParseBuildStatus(build.Status),
                 RunAt = DateTime.ParseExact(build.StartDate, "yyyyMMdd'T'HHmmsszzz", CultureInfo.InvariantCulture),
-                Passed = build.TestOccurrences.Passed,
-                Failed = build.TestOccurrences.Failed,
-                TotalTestsRun = build.TestOccurrences.Count,
+                Passed = build.TestOccurrences?.Passed ?? 0,
+                Failed = build.TestOccurrences?.Failed ?? 0,
+                TotalTestsRun = build.TestOccurrences?.Count ?? 0,
                 State = build.State,
                 Status = build.Status
             };

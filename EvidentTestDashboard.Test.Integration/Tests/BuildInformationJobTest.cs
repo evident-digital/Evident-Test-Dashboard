@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Validation;
 using EvidentTestDashboard.Library.Repositories;
 using EvidentTestDashboard.Library.Services;
-using EvidentTestDashboard.Web.Jobs;
 using Xunit;
+using EvidentTestDashboard.Library.Jobs;
 
 namespace EvidentTestDashboard.Test.Integration.Tests
 {
