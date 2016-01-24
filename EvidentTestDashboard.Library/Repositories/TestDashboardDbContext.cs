@@ -7,7 +7,8 @@ namespace EvidentTestDashboard.Library.Repositories
     public class TestDashboardDbContext : DbContext
     {
         public TestDashboardDbContext()
-            : base(nameOrConnectionString: "default") { }
+            : base(nameOrConnectionString: "default") {
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

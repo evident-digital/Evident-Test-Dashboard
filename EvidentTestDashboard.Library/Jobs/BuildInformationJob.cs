@@ -4,7 +4,6 @@ using EvidentTestDashboard.Library.Factories;
 using EvidentTestDashboard.Library.Services;
 using System.Linq;
 using System.Text.RegularExpressions;
-using static System.Configuration.ConfigurationManager;
 using EvidentTestDashboard.Library.Entities;
 using System;
 
@@ -12,8 +11,6 @@ namespace EvidentTestDashboard.Library.Jobs
 {
     public class BuildInformationJob
     {
-        private static readonly string DEFAULT_LABEL = AppSettings["label:default"];
-
         private readonly ITestDashboardUOW _uow;
         private readonly ITeamCityService _teamCityService;
 
@@ -23,10 +20,10 @@ namespace EvidentTestDashboard.Library.Jobs
             _teamCityService = teamCityService;
         }
 
-        public async Task CollectBuildDataAsync()
+        public async Task CollectBuildDataAsync(DateTime sinceDate)
         {
-            var buildTypeNames = _uow.BuildTypes.GetAll().Where(bt => bt.Environment.Dashboard.DashboardName == DEFAULT_LABEL).Select(bt => bt.BuildTypeName).Distinct();
-            var latestBuildDTOs = await _teamCityService.GetBuildsAsync(buildTypeNames, DateTime.Now.AddDays(-1.0));
+            var buildTypeNames = _uow.BuildTypes.GetAll().Where(bt => bt.Environment.Dashboard.DashboardName == Settings.DefaultDashboard).Select(bt => bt.BuildTypeName).Distinct();
+            var latestBuildDTOs = await _teamCityService.GetBuildsAsync(buildTypeNames, sinceDate);
 
             var latestBuilds = latestBuildDTOs
                 .Select(bDto => BuildFactory.Instance.Create(bDto))
@@ -70,11 +67,13 @@ namespace EvidentTestDashboard.Library.Jobs
                             testOccurrencesForBuildDTO.Select(t => TestOccurrenceFactory.Instance.Create(t)).ToList();
                         testOccurrencesForBuild.ForEach(t => build.TestOccurrences.Add(t));
 
-                        var labels = _uow.Labels.GetAll().ToList();
+                        // Add dashboard filter..
+                        var labels = _uow.Labels.GetAll().Where(l => l.Dashboard.DashboardName == Settings.DefaultDashboard).ToList();
                         foreach (var test in testOccurrencesForBuild)
                         {
-                            var label = labels.SingleOrDefault(l => l.LabelName != "Onbekend" && new Regex(l.Regex, RegexOptions.IgnoreCase).IsMatch(test.Name))
-                                ?? labels.SingleOrDefault(l => l.LabelName == "Onbekend");
+                            var label = labels.SingleOrDefault(l => l.Regex != null
+                                                && new Regex(l.Regex, RegexOptions.IgnoreCase).IsMatch(test.Name))
+                                ?? labels.SingleOrDefault(l => l.Regex == null);
                             label?.TestOccurrences.Add(test);
                         }
 

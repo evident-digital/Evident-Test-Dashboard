@@ -96,6 +96,7 @@
     <Compile Include="Repositories\TestDashboardUOW.cs" />
     <Compile Include="Services\ITeamCityService.cs" />
     <Compile Include="Services\TeamCityService.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

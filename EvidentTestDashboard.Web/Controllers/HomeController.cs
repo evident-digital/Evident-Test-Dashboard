@@ -6,14 +6,13 @@ using EvidentTestDashboard.Library.Contracts;
 using EvidentTestDashboard.Library.Entities;
 using EvidentTestDashboard.Library.Services;
 using EvidentTestDashboard.Web.ViewModels;
-using static System.Configuration.ConfigurationManager;
 using Environment = EvidentTestDashboard.Library.Entities.Environment;
+using EvidentTestDashboard.Library;
 
 namespace EvidentTestDashboard.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private static readonly string DEFAULT_LABEL = AppSettings["label:default"];
 
         private readonly ITestDashboardUOW _uow;
         private readonly ITeamCityService _teamCityService;
@@ -26,7 +25,7 @@ namespace EvidentTestDashboard.Web.Controllers
 
         public ActionResult Index()
         {
-            var dashboard = _uow.Dashboards.GetAll().SingleOrDefault(d => d.DashboardName == DEFAULT_LABEL);
+            var dashboard = _uow.Dashboards.GetAll().SingleOrDefault(d => d.DashboardName == Settings.DefaultDashboard);
 
             var model = new DashboardViewModel()
             {
