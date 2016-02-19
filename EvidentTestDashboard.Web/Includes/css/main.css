@@ -224,3 +224,8 @@
     border: 1px solid white;
     background-color: #FF6060;
 }
+
+.part.cancelled + .tooltip .tooltip-inner {
+    border: 1px solid white;
+    background-color: #949494;
+}
