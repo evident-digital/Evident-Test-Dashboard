@@ -64,8 +64,9 @@
         border-top: 1px solid #585858;
         border-bottom: 1px solid #585858;
         padding: 8px 0 10px 0;
+        text-align: center;
     }
-
+    
         .block .block-subinfo .status-total {
             margin-top: 6px;
         }
