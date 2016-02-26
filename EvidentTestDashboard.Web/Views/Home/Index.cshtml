@@ -15,15 +15,10 @@
                     </div>
                     <div class="block-subinfo">
                         <span>
-                            Last run: @build.LastRun <span>
-                                (@if (build.BuildSucceeded)
-                                 {
-                                     <span>succeeded</span>
-                                 }
-                                 else
-                                 {
-                                     <span>failed</span>
-                                 })
+                            Last run: @build.LastRun 
+                            <span>
+                                (@if (build.BuildSucceeded){<span>succeeded</span>}
+                                 else {<span>failed</span>})
                             </span>
                         </span>
                         <div class="status-total">
