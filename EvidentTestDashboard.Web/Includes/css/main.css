@@ -115,13 +115,11 @@
             }
 
             .block .block-inner .parts .part {
-                width: 5%;
-                height: 16px;
+                width: 10%;
+                height: 20px;
                 background-color: #88D07F;
                 float: left;
-                margin-bottom: 1px;
                 border: 1px solid #2F2F2F;
-                cursor: pointer;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-image: url('../images/icon-check.png');
