@@ -46,9 +46,11 @@
                                 <div class="parts">
                                     @foreach (var test in build.TestOccurrences[label])
                                     {
-                                        <div class="part @(test.Status == TestOccurrence.TEST_OCCURRENCE_FAILURE ? "failed" : test.Status == TestOccurrence.TEST_OCCURRENCE_NOT_RUN ? "cancelled" : "")"
-                                             title="@test.Name">
-                                        </div>
+                                        <a href="@(test.Build!=null?test.Build.WebUrl:"#")">
+                                            <div class="part @(test.Status == TestOccurrence.TEST_OCCURRENCE_FAILURE ? "failed" : test.Status == TestOccurrence.TEST_OCCURRENCE_NOT_RUN ? "cancelled" : "")"
+                                                 title="@test.Name">
+                                            </div>
+                                        </a>
                                     }
                                 </div>
                             </div>

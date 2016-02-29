@@ -137,6 +137,7 @@
                 .block .block-inner .parts .part.cancelled {
                     background-color: #949494;
                     background-image: none;
+                    cursor: default;
                 }
 
                     .block .block-inner .parts .part.cancelled:hover {
