@@ -50,7 +50,7 @@ namespace EvidentTestDashboard.Library.Services
         public async Task<IEnumerable<TestOccurrenceDTO>> GetTestOccurrencesForBuildAsync(long buildId)
         {
             var testOccurrencesJson =
-                await _client.GetStringAsync($"{Settings.TeamCityTestOccurrencesUri}?locator=build:{buildId}");
+                await _client.GetStringAsync($"{Settings.TeamCityTestOccurrencesUri}?locator=build:{buildId},count:2000");
             var testOccurrencesCollection =
                 JsonConvert.DeserializeObject<TestOccurrenceCollectionDTO>(testOccurrencesJson);
 
