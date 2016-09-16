@@ -71,7 +71,7 @@ namespace EvidentTestDashboard.Web.Controllers
 
             foreach (var build in builds)
             {
-                labels.ForEach(l =>
+                labels.OrderBy(l => l.Order).ThenBy(l => l.LabelName).ToList().ForEach(l =>
                 {
                     var tests = _uow.TestOccurrences.GetAll()
                         .Where(to => to.Build.BuildId == build.BuildId && to.Label.LabelName == l.LabelName)
