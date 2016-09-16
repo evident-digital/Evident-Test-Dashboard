@@ -2,6 +2,12 @@
     font-family: Arial;
     background-color: #292929;
     color: white;
+    background: url('../images/bg1.png') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding-top: 30px;
 }
 
 .container {
@@ -12,8 +18,13 @@
 
 .logo {
     float: left;
-    margin-top: 14px;
+    margin-top: 9px;
     padding-left: 15px;
+    display: none;
+}
+
+.navbar {
+    min-height: 40px;
 }
 
 .navbar-inverse {
@@ -22,6 +33,7 @@
     background: -o-linear-gradient(#2e2e2e, #212121);
     background: -moz-linear-gradient(#2e2e2e, #212121);
     background: linear-gradient(#2e2e2e, #212121);
+    border-bottom: none;
 }
 
 .navbar .navbar-header a.navbar-brand {
@@ -34,7 +46,7 @@
 /************ MAIN CONTENT ************/
 
 .body-content {
-    padding: 20px 20px 20px 20px;
+    padding: 0 20px 20px 20px;
 }
 
 .side-information {
@@ -57,14 +69,18 @@
         text-align: center;
         width: 100%;
         font-size: 18px;
-        padding-bottom: 8px;
+        padding-bottom: 4px;
     }
 
     .block .block-subinfo {
         border-top: 1px solid #585858;
         border-bottom: 1px solid #585858;
-        padding: 8px 0 10px 0;
+        padding: 4px 0 8px 0;
         text-align: center;
+    }
+
+        .block .block-subinfo span {
+        font-size: 12px;
     }
     
         .block .block-subinfo .status-total {
@@ -76,22 +92,23 @@
             text-align: center;
             padding: 6px;
             font-size: 12px;
+            border-radius: 4px;
         }
 
         .block .block-subinfo .status:first-child {
-            border-right: 2px solid #292929;
+            /*border-right: 2px solid #292929;*/
         }
 
         .block .block-subinfo .status:last-child {
-            border-left: 2px solid #292929;
+            /*border-left: 2px solid #292929;*/
         }
 
         .block .block-subinfo .status.status-succes {
-            background-color: #88D07F;
+            background-color: #aaff9f;
         }
 
         .block .block-subinfo .status.status-failed {
-            background-color: #FF6060;
+            background-color: #f96969;
         }
 
         .block .block-subinfo .status.status-cancelled {
@@ -100,9 +117,20 @@
 
     .block .block-inner {
         padding: 8px;
-        background-color: #2F2F2F;
         margin-top: 10px;
         margin-bottom: 30px;
+        position: relative;
+    }
+
+    .block .block-inner .background-inner {
+        background-color: white;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.2;
+        border-radius: 4px;
     }
 
         .block .block-inner .parts {
@@ -117,21 +145,22 @@
             .block .block-inner .parts .part {
                 width: 10%;
                 height: 20px;
-                background-color: #88D07F;
+                background-color: #aaff9f;
                 float: left;
-                border: 1px solid #2F2F2F;
+                margin: 1px 2px 1px 0;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-image: url('../images/icon-check.png');
+                border-radius: 2px;
             }
 
                 .block .block-inner .parts .part.failed {
-                    background-color: #FF6060;
+                    background-color: #f96969;
                     background-image: url('../images/icon-cross.png');
                 }
 
                     .block .block-inner .parts .part.failed:hover {
-                        background-color: #FF7070;
+                        background-color: #f96969;
                     }
 
                 .block .block-inner .parts .part.cancelled {
@@ -217,12 +246,12 @@
 
 .part + .tooltip .tooltip-inner {
     border: 1px solid white;
-    background-color: #88D07F;
+    background-color: #aaff9f;
 }
 
 .part.failed + .tooltip .tooltip-inner {
     border: 1px solid white;
-    background-color: #FF6060;
+    background-color: #f96969;
 }
 
 .part.cancelled + .tooltip .tooltip-inner {

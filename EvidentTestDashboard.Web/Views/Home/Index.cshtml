@@ -9,7 +9,7 @@
             @{ int i = 0;}
             @foreach (var build in Model.builds)
             {
-                <div class="block col-xs-12 col-sm-6 col-md-3">
+                <div class="block col-xs-12 col-sm-6 col-md-4">
                     <div class="block-title">
                         @build.EnvironmentName
                     </div>
@@ -22,16 +22,22 @@
                             </span>
                         </span>
                         <div class="status-total">
-                            <div class="container">
+                            <div class="status-container">
                                 <div class="row">
-                                    <div class="status status-succes col-xs-4 col-sm-4 col-md-4">
-                                        @build.TestsPassed
+                                    <div class="col-xs-4 col-sm-4 col-md-4">
+                                        <div class="status status-succes">
+                                            @build.TestsPassed
+                                        </div>
                                     </div>
-                                    <div class="status status-failed col-xs-4 col-sm-4 col-md-4">
-                                        @build.TestsFailed
+                                    <div class="col-xs-4 col-sm-4 col-md-4">
+                                        <div class="status status-failed">
+                                            @build.TestsFailed
+                                        </div>
                                     </div>
-                                    <div class="status status-cancelled col-xs-4 col-sm-4 col-md-4">
-                                        @build.TestsNotRun
+                                    <div class="col-xs-4 col-sm-4 col-md-4">
+                                        <div class="status status-cancelled">
+                                            @build.TestsNotRun
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -39,6 +45,7 @@
                     </div>
 
                     <div class="block-inner @(i > 0 ? "" : "main-block")">
+                        <div class="background-inner"></div>
                         @foreach (var label in build.TestOccurrences.Keys)
                         {
                             <div class="set">

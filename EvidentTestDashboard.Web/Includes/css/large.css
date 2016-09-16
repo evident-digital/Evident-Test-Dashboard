@@ -7,11 +7,13 @@
     .block .block-inner {
         min-height: 600px;
         padding-top: 0;
+        margin-bottom: 0;
+        padding: 1px 7px 0 7px;
     }
 
         .block .block-inner .set {
             position: relative;
-            margin-top: 8px;
+            margin-top: 2px;
         }
 
         .block .block-inner .info {
@@ -19,13 +21,13 @@
             left: -100px;
             width: 80px;
             text-align: right;
-            color: #9E9E9E;
+            color: white;
             top: 0;
         }
 
             .block .block-inner .parts .part {
-                width: 10%;
-                height: 20px;
+                width: 18px;
+                height: 18px;
             }
 
         .block .block-inner:not(.main-block) .info {
