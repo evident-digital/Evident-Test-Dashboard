@@ -148,6 +148,7 @@
     <Content Include="Includes\css\medium.css" />
     <Content Include="Includes\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Includes\images\bg1.png" />
     <Content Include="Includes\images\icon-check.png" />
     <Content Include="Includes\images\icon-cross.png" />
     <Content Include="Includes\images\Logo-evident.png" />
