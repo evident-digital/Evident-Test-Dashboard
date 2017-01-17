@@ -59,6 +59,7 @@
     <Compile Include="Contracts\IRepository.cs" />
     <Compile Include="Contracts\ITestDashboardUOW.cs" />
     <Compile Include="DTO\BuildDTO.cs" />
+    <Compile Include="DTO\FirstFailedDTO.cs" />
     <Compile Include="EnforceReferences.cs" />
     <Compile Include="Entities\Build.cs" />
     <Compile Include="Entities\BuildType.cs" />
@@ -93,6 +94,10 @@
     <Compile Include="Migrations\201609161332027_Add_Label_Order_column.Designer.cs">
       <DependentUpon>201609161332027_Add_Label_Order_column.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701171713215_AddFailedFirstBuildIDColumn.cs" />
+    <Compile Include="Migrations\201701171713215_AddFailedFirstBuildIDColumn.Designer.cs">
+      <DependentUpon>201701171713215_AddFailedFirstBuildIDColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EFRepository.cs" />
@@ -123,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609161332027_Add_Label_Order_column.resx">
       <DependentUpon>201609161332027_Add_Label_Order_column.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701171713215_AddFailedFirstBuildIDColumn.resx">
+      <DependentUpon>201701171713215_AddFailedFirstBuildIDColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

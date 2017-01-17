@@ -26,7 +26,7 @@ namespace EvidentTestDashboard.Library
         public static string TeamCityUserName { get { return AppSettings["teamCity:userName"]; } }
         public static string TeamCityPassword { get { return AppSettings["teamCity:password"]; } }
         public static string TeamCityBaseUri { get { return AppSettings["teamCity:uri:base"]; } }
-        public static string TeamCityBuildsUri { get { return $@"{TeamCityBaseUri}{AppSettings["teamCity:uri:builds"]}"; } }
-        public static string TeamCityTestOccurrencesUri { get { return $@"{TeamCityBaseUri}{AppSettings["teamCity:uri:tests"]}"; } }
+        public static string TeamCityBuildsUri { get { return $"{TeamCityBaseUri}{AppSettings["teamCity:uri:builds"]}"; } }
+        public static string TeamCityTestOccurrencesUri { get { return $"{TeamCityBaseUri}{AppSettings["teamCity:uri:tests"]}"; } }
     }
 }

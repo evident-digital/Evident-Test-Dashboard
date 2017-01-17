@@ -77,6 +77,8 @@ namespace EvidentTestDashboard.Web.Controllers
                         .Where(to => to.Build.BuildId == build.BuildId && to.Label.LabelName == l.LabelName)
                         .OrderBy(t => t.Name)
                         .ToList();
+                    // Set build property..
+                    tests.ForEach(t => t.Build = build);
                     if (testOccurrences.ContainsKey(l.LabelName))
                         testOccurrences[l.LabelName].AddRange(tests);
                     else

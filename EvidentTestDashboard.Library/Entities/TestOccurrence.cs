@@ -19,6 +19,7 @@ namespace EvidentTestDashboard.Library.Entities
         public int? Duration { get; set; }
         public string Details { get; set; }
         public bool TestOccurrenceSucceeded { get; set; }
+        public int? FailedFirstBuildId { get; set; }
 
         public int BuildId { get; set; }
         public int LabelId { get; set; }

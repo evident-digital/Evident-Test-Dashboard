@@ -62,12 +62,17 @@ namespace EvidentTestDashboard.Library.Services
                 var testExtendedInfoJson = await _client.GetStringAsync($"{Settings.TeamCityBaseUri}{test.Href}");
                 var testExtendedInfo = JObject.Parse(testExtendedInfoJson);
                 test.Details = testExtendedInfo.Value<string>("details");
+                var firstFailed = testExtendedInfo["firstFailed"];
+                if (firstFailed != null)
+                {
+                    // id:XXXX,build:(id:XXXX)
+                    test.FirstFailed = firstFailed.ToObject<FirstFailedDTO>();
+                }
                 test.LabelName = test.Name;
             }
 
             return testOccurrencesCollection.TestOccurrences;
         }
-
         private async Task<IDictionary<string, int>> GetLatestBuildIdsAsync(IEnumerable<string> buildTypeIds)
         {
             var result = new Dictionary<string, int>();

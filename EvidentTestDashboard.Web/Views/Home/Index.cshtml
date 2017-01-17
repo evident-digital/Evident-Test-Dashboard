@@ -54,7 +54,7 @@
                                     @foreach (var test in build.TestOccurrences[label])
                                     {
                                         <a href="@(test.Build!=null?test.Build.WebUrl:"#")">
-                                            <div class="part @(test.Status == TestOccurrence.TEST_OCCURRENCE_FAILURE ? "failed" : test.Status == TestOccurrence.TEST_OCCURRENCE_NOT_RUN ? "cancelled" : "")"
+                                            <div class="part @(test.Status == TestOccurrence.TEST_OCCURRENCE_FAILURE ? "failed" : test.Status == TestOccurrence.TEST_OCCURRENCE_NOT_RUN ? "cancelled" : "") @(test.Status == TestOccurrence.TEST_OCCURRENCE_FAILURE && test.FailedFirstBuildId == null ? "first-failure" : "")"
                                                  title="@test.Name">
                                             </div>
                                         </a>

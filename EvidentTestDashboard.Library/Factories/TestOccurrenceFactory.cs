@@ -26,7 +26,8 @@ namespace EvidentTestDashboard.Library.Factories
                 Href = testOccurrence.Href,
                 Name = testOccurrence.LabelName,
                 Details = testOccurrence.Details,
-                TestOccurrenceSucceeded = ParseTestOccurrenceStatus(testOccurrence.Status)
+                TestOccurrenceSucceeded = ParseTestOccurrenceStatus(testOccurrence.Status),
+                FailedFirstBuildId = testOccurrence.FirstFailed?.BuildID
             };
         }
 

@@ -155,11 +155,14 @@
             }
 
                 .block .block-inner .parts .part.failed {
-                    background-color: #f96969;
+                    background-color: #ffa256;
                     background-image: url('../images/icon-cross.png');
                 }
 
-                    .block .block-inner .parts .part.failed:hover {
+                .block .block-inner .parts .part.failed.first-failure {
+                    background-color: #f96969;
+                }
+               .block .block-inner .parts .part.failed:hover {
                         background-color: #f96969;
                     }
 
